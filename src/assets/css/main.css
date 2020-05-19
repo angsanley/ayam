@@ -70,3 +70,7 @@ a {
 .input-error {
     @apply border-red-200;
 }
+
+.card {
+    @apply rounded-lg overflow-hidden shadow-lg;
+}

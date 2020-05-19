@@ -63,6 +63,7 @@
                         // save phpsessid
                         const phpsessid = this.cookies.find(el => el.name === "PHPSESSID").value;
                         this.$store.dispatch('setPhpsessid', phpsessid);
+                        this.$store.dispatch('isAuthenticated', true);
 
                         this.$Progress.finish();
                         this.loading = false;
@@ -77,6 +78,10 @@
                         this.error = error.response.data.message;
                     });
             }
+        },
+        created() {
+            // reset
+            this.$store.dispatch('isAuthenticated', false);
         }
     }
 </script>

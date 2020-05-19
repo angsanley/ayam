@@ -12,21 +12,32 @@ const vuexPersist = new VuexPersist({
 export default new Vuex.Store({
   state: {
     phpsessid: '',
+    isAuthenticated: false,
   },
   getters: {
     phpsessid: (state) => {
       return state.phpsessid
     },
+    isAuthenticated: (state) => {
+      return state.isAuthenticated
+    }
   },
   mutations: {
     SET_PHPSESSID: (state, newValue) => {
       state.phpsessid = newValue
+    },
+    SET_ISAUTHENTICATED: (state, newValue) => {
+      state.isAuthenticated = newValue
     },
   },
   actions: {
     setPhpsessid: ({commit, state}, newValue) => {
       commit('SET_PHPSESSID', newValue)
       return state.phpsessid
+    },
+    isAuthenticated: ({commit, state}, newValue) => {
+      commit('SET_ISAUTHENTICATED', newValue)
+      return state.isAuthenticated
     },
   },
   modules: {
