@@ -72,9 +72,9 @@
                     })
                     .catch((error) => {
                         console.log(error);
-                        if (error.response.data.message) this.error = error.response.data.message;
                         this.$Progress.fail();
                         this.loading = false;
+                        this.error = error.response.data.message;
                     });
             }
         }

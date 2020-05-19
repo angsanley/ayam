@@ -5,7 +5,7 @@ import VuexPersist from 'vuex-persist'
 Vue.use(Vuex)
 
 const vuexPersist = new VuexPersist({
-  key: 'my-app',
+  key: 'app-data',
   storage: window.localStorage
 })
 
