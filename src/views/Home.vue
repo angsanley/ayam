@@ -31,7 +31,7 @@
                 }
 
                 axios.request({
-                    url: "http://localhost:3000/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/staff/init/check_session",
+                    url: "https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/staff/init/check_session",
                     method: "get",
                     headers: {
                         Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
@@ -54,8 +54,10 @@
             },
             getBinusianData() {
                 // https://binusmaya.binus.ac.id/services/ci/index.php/general/getBinusianData
+                this.$Progress.start();
+                
                 axios.request({
-                    url: "http://localhost:3000/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/general/getBinusianData",
+                    url: "https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/general/getBinusianData",
                     method: "get",
                     headers: {
                         Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
