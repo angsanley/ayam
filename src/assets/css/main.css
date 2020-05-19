@@ -42,12 +42,16 @@ a {
     @apply bg-primary shadow-xl text-white font-bold py-2 px-8 rounded-full;
 }
 
-.default-button:hover {
+.default-button:not([disabled]):hover {
     @apply bg-blue-600;
 }
 
 .default-button:focus {
     @apply outline-none shadow-outline;
+}
+
+.default-button:disabled {
+    @apply shadow-none opacity-75;
 }
 
 .default-input {
@@ -57,4 +61,12 @@ a {
 
 .default-input:focus {
     @apply outline-none shadow-outline;
+}
+
+.default-input:disabled {
+    @apply opacity-75;
+}
+
+.input-error {
+    @apply border-red-200;
 }
