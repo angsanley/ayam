@@ -2,7 +2,7 @@
     <div class="home">
         <img alt="Vue logo" src="../assets/logo.png">
         Hello, {{binusianData.FIRST_NAME}}
-        {{videoConferences}}
+        {{ videoConferences }}
     </div>
 </template>
 
@@ -13,6 +13,7 @@
     // GET https://binusmaya.binus.ac.id/services/ci/index.php/student/init/getCourses
 
     import axios from "axios";
+    import * as HtmlTableToJson from "html-table-to-json";
 
     export default {
         name: 'Home',
@@ -114,9 +115,16 @@
                         }
                     })
                         .then((response) => {
-                            this.$Progress.finish();
-                            this.videoConferences.push(this.tableToJson(response.data));
+                            let data = response.data;
 
+                            // remove stupid tag
+                            data = data.replace(/<span.+vc="/g, "");
+                            data = data.replace(/">.+>/g, "");
+
+                            // convert html into json (stupid IT div.. huh!)
+                            this.videoConferences.push(HtmlTableToJson.parse(`<table>${data}</table>`).results);
+
+                            this.$Progress.finish();
                         })
                         .catch((error) => {
                             console.log(error);
@@ -124,21 +132,6 @@
                         });
                 });
                 this.$Progress.finish();
-            },
-            tableToJson(table) {
-                let data = []; // first row needs to be headers var headers = [];
-                let headers = [];
-                for (let i=0; i<table.rows[0].cells.length; i++) {
-                    headers[i] = table.rows[0].cells[i].innerHTML.toLowerCase().replace(/ /gi,'');
-                }
-                // go through cells
-                for (let i=1; i<table.rows.length; i++) {
-                    let tableRow = table.rows[i]; var rowData = {};
-                    for (let j=0; j<tableRow.cells.length; j++) {
-                        rowData[ headers[j] ] = tableRow.cells[j].innerHTML;
-                    } data.push(rowData);
-                }
-                return data;
             }
         },
         async mounted() {

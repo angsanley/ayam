@@ -12,6 +12,8 @@
     "autoprefixer": "^9.8.0",
     "axios": "^0.19.2",
     "core-js": "^3.6.4",
+    "html-table-to-json": "^1.0.0",
+    "table-to-json": "^1.0.0",
     "tailwindcss": "^1.4.6",
     "vue": "^2.6.11",
     "vue-progressbar": "^0.7.5",
