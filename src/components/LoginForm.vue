@@ -19,7 +19,7 @@
             </div>
             <div class="flex items-center justify-between">
                 <button class="default-button" type="submit" :disabled="(this.loading)">
-                    <i class="fa fa-circle-o-notch fa-spin" v-if="(this.loading)"/> {{ (this.loading? loadingButtonText : buttonText) }}
+                    <i class="fas fa-circle-notch fa-spin" v-if="(this.loading)"/> {{ (this.loading? loadingButtonText : buttonText) }}
                 </button>
                 <a class="inline-block align-baseline font-bold text-sm text-blue-500 hover:text-blue-800" href="#">
                     Forgot Password?

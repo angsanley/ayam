@@ -1,9 +1,9 @@
 <template>
     <div class="home">
-        <img alt="Vue logo" src="../assets/logo.png">
-        Hello, {{binusianData.FIRST_NAME}}
-        {{ videoConferences }}
-    </div>
+        <div class="col-span-10">
+            asd
+        </div>
+</div>
 </template>
 
 <script>
@@ -17,8 +17,7 @@
 
     export default {
         name: 'Home',
-        components: {
-        },
+        components: {},
         data() {
             return {
                 binusianData: {},
