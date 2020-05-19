@@ -8,10 +8,12 @@
         <div class="w-full">
             <h3 class="mb-2">Assignments</h3>
             <div class="items">
-                <div class="card assignment-card" v-for="assignment in this.assignments" :key="assignment.Title">
-                    <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
-                    <span class="text-sm text-gray-500">{{assignment.Title}}</span><br>
-                    <span class="pt-2 text-sm text-gray-500">Due on {{assignment.deadlineDuration}}</span>
+                <div class="card assignment-card flex flex-shrink-0" v-for="assignment in this.assignments" :key="assignment.Title">
+                    <div class="flex flex-col h-full justify-between">
+                        <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
+                        <div class="text-sm text-gray-500">{{assignment.Title}}</div>
+                        <div class="pt-2 text-sm text-gray-500 mt-auto">Due on {{assignment.deadlineDuration}}</div>
+                    </div>
                 </div>
             </div>
         </div>
@@ -29,12 +31,17 @@
 
     .assignment-card {
         @apply w-64 inline-block p-4 mr-4;
+        white-space: normal;
+        word-wrap: break-word !important;
     }
 
     .items {
         white-space: nowrap;
         overflow-x: auto;
-        @apply pt-2 pb-8;
+        @apply pl-2 pt-2 pb-8 flex;
+    }
+
+    .items > div {
     }
 </style>
 
