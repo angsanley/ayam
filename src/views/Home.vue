@@ -12,7 +12,8 @@
                     <div class="flex flex-col h-full justify-between">
                         <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
                         <div class="text-sm text-gray-500">{{assignment.Title}}</div>
-                        <div class="pt-2 text-sm text-gray-500 mt-auto">Due on {{assignment.deadlineDuration}}</div>
+                        <div class="pt-2 text-sm text-gray-500 mt-auto">Due {{assignment.deadlineDuration | relativeTime}}</div>
+<!--                        <a :href="`https://binusmaya.binus.ac.id/services/ci/index.php/general/downloadDocument/${assignment.assignmentPathLocation}`">Download file</a>-->
                     </div>
                 </div>
             </div>
@@ -54,6 +55,7 @@
 
     import axios from "axios";
     import * as HtmlTableToJson from "html-table-to-json";
+    import moment from "moment";
 
     export default {
         name: 'Home',
@@ -201,8 +203,11 @@
                             let data = response.data;
 
                             data.forEach((e) => {
-                                e.classNbr = classNbr;
-                                this.assignments.push(e);
+                                // filter out past assignments
+                                if(moment(e.deadlineDuration).isAfter()) {
+                                    e.classNbr = classNbr;
+                                    this.assignments.push(e);
+                                }
                             })
 
                             this.$Progress.finish();
@@ -213,6 +218,13 @@
                         });
                 });
                 this.$Progress.finish();
+            },
+        },
+        computed: {
+        },
+        filters: {
+            relativeTime: function (date) {
+                return moment(date).fromNow();
             }
         },
         async mounted() {
