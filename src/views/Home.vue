@@ -122,7 +122,11 @@
                             data = data.replace(/">.+>/g, "");
 
                             // convert html into json (stupid IT div.. huh!)
-                            this.videoConferences.push(HtmlTableToJson.parse(`<table>${data}</table>`).results);
+                            const videoConference = {
+                                classNbr,
+                                classes: HtmlTableToJson.parse(`<table>${data}</table>`).results
+                            }
+                            this.videoConferences.push(videoConference);
 
                             this.$Progress.finish();
                         })
