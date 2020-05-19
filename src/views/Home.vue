@@ -6,19 +6,17 @@
         <!--        </div>-->
 
         <div class="w-full">
+            <vue-content-loading v-if="isLoading" :width="300" :height="20">
+                <rect x="0" width="50" height="20" />
+                <rect x="55" width="50" height="20" />
+                <rect x="110" width="50" height="20" />
+            </vue-content-loading>
             <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
         </div>
     </div>
 </template>
 
 <style scoped>
-    .home {
-        width: 100%;
-    }
-
-    .small-heading {
-        @apply uppercase text-gray-700 font-bold;
-    }
 
 </style>
 
@@ -33,16 +31,18 @@
     import * as HtmlTableToJson from "html-table-to-json";
     import moment from "moment";
     import Assignments from "../components/Assignments";
+    import { VueContentLoading } from 'vue-content-loading';
 
     export default {
         name: 'Home',
-        components: {Assignments},
+        components: {Assignments, VueContentLoading},
         data() {
             return {
                 binusianData: {},
                 courses: [],
                 videoConferences: [],
-                assignments: []
+                assignments: [],
+                isLoading: false
             }
         },
         methods: {
@@ -162,6 +162,7 @@
             getAssignments() {
                 // https://binusmaya.binus.ac.id/services/ci/index.php/student/classes/assignmentType/COMP6229/011643/1920/LEC/14910/01
                 this.$Progress.start();
+                this.isLoading = true;
                 this.courses.forEach(e => {
                     const courseId = e.COURSEID;
                     const crseId = e.CRSE_ID;
@@ -179,19 +180,23 @@
                         .then((response) => {
                             let data = response.data;
 
-                            data.forEach((e) => {
+                            data.forEach((e, idx, array) => {
                                 // filter out past assignments
                                 if(moment(e.deadlineDuration).isAfter()) {
                                     e.classNbr = classNbr;
                                     this.assignments.push(e);
                                 }
-                            })
 
-                            this.$Progress.finish();
+                                if (idx === array.length - 1){
+                                    this.$Progress.finish();
+                                    this.isLoading = false;
+                                }
+                            })
                         })
                         .catch((error) => {
                             console.log(error);
                             this.$Progress.fail();
+                            this.isLoading = false;
                         });
                 });
                 this.$Progress.finish();
