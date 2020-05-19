@@ -1,7 +1,60 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
 #app {
     font-family: Inter, sans-serif;
+    color: theme('colors.gray.700');
 }
 
 h1, h2, h3, h4, h5, h6 {
     font-family: Quicksand, sans-serif;
+    color: theme('colors.gray.800');
+    font-weight: bold;
+}
+
+h1 {
+    @apply text-4xl;
+}
+
+h2 {
+    @apply text-3xl;
+}
+
+h3 {
+    @apply text-2xl;
+}
+
+h4 {
+    @apply text-xl;
+}
+
+h5 {
+    @apply text-lg;
+}
+
+a {
+    @apply text-blue-600 underline;
+}
+
+.default-button {
+    /*bg-primary shadow-xl hover:bg-blue-600 text-white font-bold py-2 px-8 rounded-full focus:outline-none focus:shadow-outline*/
+    @apply bg-primary shadow-xl text-white font-bold py-2 px-8 rounded-full;
+}
+
+.default-button:hover {
+    @apply bg-blue-600;
+}
+
+.default-button:focus {
+    @apply outline-none shadow-outline;
+}
+
+.default-input {
+    /*appearance-none border rounded py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline*/
+    @apply appearance-none border rounded py-2 px-3 text-gray-700 leading-tight;
+}
+
+.default-input:focus {
+    @apply outline-none shadow-outline;
 }
