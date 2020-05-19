@@ -24,6 +24,12 @@
         methods: {
             checkSession() {
                 this.$Progress.start();
+
+                if (this.$store.state.phpsessid === '') {
+                    // redirect to login
+                    this.$router.push('/login');
+                }
+
                 axios.request({
                     url: "http://localhost:3000/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/staff/init/check_session",
                     method: "get",
