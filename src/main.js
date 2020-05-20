@@ -7,6 +7,8 @@ import store from './store'
 import VueProgressBar from 'vue-progressbar'
 import moment from 'moment-timezone';
 import VCalendar from 'v-calendar';
+import PerfectScrollbar from 'vue2-perfect-scrollbar'
+import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
 
 moment.tz.setDefault("Asia/Jakarta");
 
@@ -21,6 +23,8 @@ Vue.use(VueProgressBar, {
 Vue.use(VCalendar, {
   componentPrefix: 'vc'
 });
+
+Vue.use(PerfectScrollbar)
 
 Vue.config.productionTip = false
 

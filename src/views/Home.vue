@@ -1,8 +1,8 @@
 <template>
     <div class="home pt-8 lg:h-screen">
         <div class="grid grid-cols-12 h-full lg:overflow-y-hidden">
-            <div class="lg:overflow-y-scroll h-full xl:col-span-9 lg:col-span-8 col-span-12 w-full px-6 md:px-8 lg:px-10">
 
+            <perfect-scrollbar class="lg:overflow-y-scroll h-full xl:col-span-9 lg:col-span-8 col-span-12 w-full px-6 md:px-8 lg:px-10">
                 <div class="card w-full p-6 mb-12">
                     <div class="flex flex-col-reverse sm:flex-row justify-between">
                         <div class="flex flex-col justify-center w-full md:w-8/12">
@@ -46,12 +46,11 @@
 
                     <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
                 </div>
+            </perfect-scrollbar>
 
-            </div>
-
-            <div class="lg:overflow-y-scroll h-full pb-8 pl-6 lg:pl-2 xl:col-span-3 lg:col-span-4 col-span-12 pr-6 md:pr-8 lg:pr-4 xl:pr-10">
+            <perfect-scrollbar class="lg:overflow-y-scroll h-full pb-8 pl-6 lg:pl-2 xl:col-span-3 lg:col-span-4 col-span-12 pr-6 md:pr-8 lg:pr-4 xl:pr-10">
                 <your-schedule :calendar-dates="calendarDates"/>
-            </div>
+            </perfect-scrollbar>
         </div>
     </div>
 </template>

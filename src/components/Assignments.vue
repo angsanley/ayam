@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="mb-2">Assignments</h3>
-        <div class="items" v-dragscroll="window.width >= 1024">
+        <perfect-scrollbar class="items" v-dragscroll="window.width >= 1024">
             <div class="card assignment-card flex flex-shrink-0" v-for="assignment in this.assignments" :key="assignment.Title">
                 <div class="flex flex-col h-full justify-between">
                     <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
@@ -10,7 +10,7 @@
                     <!--                        <a :href="`https://binusmaya.binus.ac.id/services/ci/index.php/general/downloadDocument/${assignment.assignmentPathLocation}`">Download file</a>-->
                 </div>
             </div>
-        </div>
+        </perfect-scrollbar>
     </div>
 </template>
 
