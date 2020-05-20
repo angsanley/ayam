@@ -239,11 +239,20 @@
                             let data = response.data;
 
                             data.forEach((e, idx, array) => {
-                                // filter out past assignments
-                                if(moment(e.deadlineDuration).isAfter()) {
-                                    e.classNbr = classNbr;
-                                    this.assignments.push(e);
-                                }
+                                e.classNbr = classNbr;
+                                this.assignments.push(e);
+
+                                // insert into calendar
+                                const calendarObj = {
+                                    key: `${e.StudentAssignmentID}`,
+                                    dot: 'purple',
+                                    dates: new moment(`${e.deadlineDuration} ${e.deadlineTime}`, "DD MMM YYYY HH:mm:ss").toDate(),
+                                    popover: {
+                                        label: `${e.deadlineTime.substring(0,5)} - Asg. Deadline - ${this.courses.find(e => e.CLASS_NBR === classNbr).COURSENAME}`,
+                                    },
+                                };
+
+                                this.calendarDates.push(calendarObj);
 
                                 if (idx === array.length - 1){
                                     this.$Progress.finish();
@@ -311,6 +320,7 @@
                 this.$Progress.start();
                 this.isLoading = true;
 
+                // input class schedules
                 this.classSchedules.forEach(e => {
                     let dot = true;
                     if (e.N_DELIVERY_MODE === "GSLC") {
