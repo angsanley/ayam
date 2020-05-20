@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="mb-2">Assignments</h3>
-        <div class="items">
+        <div class="items" v-dragscroll>
             <div class="card assignment-card flex flex-shrink-0" v-for="assignment in this.assignments" :key="assignment.Title">
                 <div class="flex flex-col h-full justify-between">
                     <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
@@ -16,6 +16,7 @@
 
 <script>
     import moment from "moment";
+    import { dragscroll } from 'vue-dragscroll';
 
     export default {
         name: "Assignments",
@@ -26,15 +27,22 @@
             }
         },
         mounted() {
-        }
+        },
+        directives: {
+            'dragscroll': dragscroll
+        },
     }
 </script>
 
 <style scoped>
     .assignment-card {
-        @apply w-64 inline-block p-4 mr-4;
+        @apply w-64 inline-block p-4 mr-4 transition ease-out duration-300;
         white-space: normal;
         word-wrap: break-word !important;
+    }
+
+    .assignment-card:hover {
+        @apply transform scale-105 shadow-xl;
     }
 
     .items {
