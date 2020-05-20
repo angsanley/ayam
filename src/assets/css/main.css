@@ -79,6 +79,7 @@ a {
 }
 
 /*Dirty hacks for VC Calender*/
+/* purgecss start ignore */
 .vc-border {
     border: none !important;
 }
@@ -96,3 +97,4 @@ a {
     background: theme('colors.primary') !important;
     box-shadow: 0 7px 8px -3px rgba(48, 168, 230, 0.5);
 }
+/* purgecss end ignore */
