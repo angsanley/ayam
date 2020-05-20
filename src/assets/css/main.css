@@ -5,6 +5,7 @@
 #app {
     font-family: Inter, sans-serif;
     color: theme('colors.gray.700');
+    @apply bg-gray-100 h-screen overflow-y-auto;
 }
 
 h1, h2, h3, h4, h5, h6 {
@@ -72,5 +73,5 @@ a {
 }
 
 .card {
-    @apply rounded-lg overflow-hidden shadow-lg;
+    @apply rounded-lg overflow-hidden shadow-lg bg-white;
 }

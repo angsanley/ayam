@@ -1,13 +1,18 @@
 <template>
-    <div class="home pt-8 ">
+    <div class="home pt-8">
         <div class="grid grid-cols-12">
-            <div class="lg:col-span-9 md:col-span-8 col-span-12 w-full px-6 md:px-8 lg:px-10">
+            <div class="lg:col-span-9 col-span-12 w-full px-6 md:px-8 lg:px-10">
 
                 <div class="card w-full p-6 mb-12">
-                    <div class="flex flex-col-reverse sm:flex-row sm:h-56 justify-between">
+                    <div class="flex flex-col-reverse sm:flex-row lg:h-56 justify-between">
                         <div class="flex flex-col justify-center w-full md:w-8/12">
-                            <h4>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME.toLowerCase() }}</span>!</h4>
+                            <h3>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME.toLowerCase() }}</span>!</h3>
                             <p class="pt-2">{{randomQuote}}</p>
+                            <h4 class="mt-4">Your next class starting in 12 min.</h4>
+                            <div class="text-gray-600 text-sm">
+                                <div><i class="mr-1 fas fa-book"/> Computer Networks</div>
+                                <div><i class="mr-1 fas fa-clock"/> Monday</div>
+                            </div>
                         </div>
                         <div class="flex max-h-full mb-4 sm:mb-0">
                             <img class="max-h-full mr-0 object-contain" src="../assets/img/study.png" alt="study"/>
@@ -25,7 +30,7 @@
 
             </div>
 
-            <div class="lg:col-span-3 md:col-span-4 col-span-12 px-6 md:px-8 lg:px-10">
+            <div class="lg:col-span-3 col-span-12 px-6 md:px-8 lg:px-10">
                 d
             </div>
         </div>
