@@ -20,13 +20,27 @@
                     </div>
                 </div>
 
-                <vue-content-loading v-if="isLoading" :width="300" :height="20">
-                    <rect x="0" width="50" height="20" />
-                    <rect x="55" width="50" height="20" />
-                    <rect x="110" width="50" height="20" />
-                </vue-content-loading>
+                <div class="mb-4">
+                    <vue-content-loading v-if="videoConferences.length <= 0"  class="w-full" :height="60">
+                        <rect x="0" y="0" width="50" height="12" />
+                        <rect x="0" y="15" width="100" height="35" />
+                        <rect x="105" y="15" width="100" height="35" />
+                        <rect x="210" y="15" width="100" height="35" />
+                    </vue-content-loading>
 
-                <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
+                    <video-conferences :video-conferences="videoConferences" :courses="courses" v-if="videoConferences.length > 0"/>
+                </div>
+
+                <div class="mb-4">
+                    <vue-content-loading v-if="assignments.length <= 0"  class="w-full" :height="60">
+                        <rect x="0" y="0" width="50" height="12" />
+                        <rect x="0" y="15" width="100" height="35" />
+                        <rect x="105" y="15" width="100" height="35" />
+                        <rect x="210" y="15" width="100" height="35" />
+                    </vue-content-loading>
+
+                    <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
+                </div>
 
             </div>
 
@@ -53,10 +67,11 @@
     import moment from "moment";
     import Assignments from "../components/Assignments";
     import { VueContentLoading } from 'vue-content-loading';
+    import VideoConferences from "../components/VideoConferences";
 
     export default {
         name: 'Home',
-        components: {Assignments, VueContentLoading},
+        components: {VideoConferences, Assignments, VueContentLoading},
         data() {
             return {
                 binusianData: {},
@@ -166,11 +181,18 @@
                             data = data.replace(/">.+>/g, "");
 
                             // convert html into json (stupid IT div.. huh!)
-                            const videoConference = {
-                                classNbr,
-                                classes: HtmlTableToJson.parse(`<table>${data}</table>`).results
-                            }
-                            this.videoConferences.push(videoConference);
+                            const classes = HtmlTableToJson.parse(`<table>${data}</table>`).results[0];
+
+                            classes.forEach(e => {
+                                e.classNbr = classNbr;
+
+                                //split time
+                                const time = e.Time.split(' - ');
+                                e.startDate = `${e.Date} ${time[0]}`;
+                                e.endDate = `${e.Date} ${time[1]}`;
+
+                                this.videoConferences.push(e);
+                            });
 
                             this.$Progress.finish();
                         })
