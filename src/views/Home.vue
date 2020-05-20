@@ -1,7 +1,7 @@
 <template>
-    <div class="home pt-8">
-        <div class="grid grid-cols-12">
-            <div class="xl:col-span-9 lg:col-span-8 col-span-12 w-full px-6 md:px-8 lg:px-10">
+    <div class="home pt-8 lg:h-screen">
+        <div class="grid grid-cols-12 h-full lg:overflow-y-hidden">
+            <div class="lg:overflow-y-scroll h-full xl:col-span-9 lg:col-span-8 col-span-12 w-full px-6 md:px-8 lg:px-10">
 
                 <div class="card w-full p-6 mb-12">
                     <div class="flex flex-col-reverse sm:flex-row justify-between">
@@ -44,7 +44,7 @@
 
             </div>
 
-            <div class="pb-8 pl-4 lg:pl-0 xl:col-span-3 lg:col-span-4 col-span-12 pr-6 md:pr-8 lg:pr-4 xl:pr-10">
+            <div class="lg:overflow-y-scroll h-full pb-8 pl-4 lg:pl-2 xl:col-span-3 lg:col-span-4 col-span-12 pr-6 md:pr-8 lg:pr-4 xl:pr-10">
                 <h3>Your Schedule</h3>
                 <div class="mt-4">
                     <vc-calendar class="shadow-md border-none" is-expanded :attributes="calendarDates"/>

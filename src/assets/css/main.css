@@ -6,7 +6,7 @@
     font-family: Inter, sans-serif;
     color: theme('colors.gray.700');
     scroll-behavior: smooth;
-    @apply bg-gray-100 h-screen overflow-y-auto;
+    @apply bg-gray-100;
 }
 
 h1, h2, h3, h4, h5, h6 {
