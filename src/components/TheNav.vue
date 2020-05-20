@@ -42,7 +42,7 @@
     }
 
     .link-active {
-        @apply text-blue-600;
+        color: theme('colors.primary');
     }
 
     .nav {

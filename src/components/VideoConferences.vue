@@ -6,10 +6,10 @@
                 <div class="flex flex-col h-full justify-between">
                     <div>
                         <h5>{{courses.find(e => e.CLASS_NBR === videoConference.classNbr).COURSENAME}}</h5>
-                        <div class="text-sm text-gray-500">{{courses.find(e => e.CLASS_NBR === videoConference.classNbr).SSR_COMPONENT}}</div>
-                        <div class="pt-2 text-sm text-gray-500 mt-auto">Starts {{videoConference.startDate | relativeTime}}</div>
+                        <div class="text-sm font-medium text-gray-600">{{courses.find(e => e.CLASS_NBR === videoConference.classNbr).SSR_COMPONENT}}</div>
                     </div>
-                    <a class="button default-button mt-4 text-center no-underline text-sm" :href="videoConference.Link"><i class="fas fa-external-link-alt"/> Open in Zoom</a>
+                    <div class="pt-2 text-sm text-gray-500 mt-auto">Starts {{videoConference.startDate | relativeTime}}</div>
+                    <a class="button default-button mt-2 text-center no-underline text-sm" :href="videoConference.Link"><i class="fas fa-external-link-alt"/> Open in Zoom</a>
                     <!--                        <a :href="`https://binusmaya.binus.ac.id/services/ci/index.php/general/downloadDocument/${assignment.assignmentPathLocation}`">Download file</a>-->
                 </div>
             </div>
