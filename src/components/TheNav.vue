@@ -31,9 +31,9 @@
 
 <style scoped>
     .navbar {
-        @apply relative py-4 px-6 text-gray-900 bg-white text-left shadow-lg float-none fixed bottom-0;
+        @apply relative py-1 px-6 text-gray-900 bg-white text-left shadow-lg float-none fixed bottom-0;
         width: 100vw;
-        height: 6rem;
+        height: 4rem;
     }
 
     .link {
