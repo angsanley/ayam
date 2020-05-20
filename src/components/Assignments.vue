@@ -6,7 +6,7 @@
                 <div class="flex flex-col h-full justify-between">
                     <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
                     <div class="text-sm text-gray-500">{{assignment.Title}}</div>
-                    <div class="pt-2 text-sm text-gray-500 mt-auto">Due {{assignment.deadlineDuration | relativeTime}}</div>
+                    <div class="pt-2 text-sm text-gray-500 mt-auto">Due {{`${assignment.deadlineDuration} ${assignment.deadlineTime}` | relativeTime}}</div>
                     <!--                        <a :href="`https://binusmaya.binus.ac.id/services/ci/index.php/general/downloadDocument/${assignment.assignmentPathLocation}`">Download file</a>-->
                 </div>
             </div>
@@ -15,7 +15,7 @@
 </template>
 
 <script>
-    import moment from "moment";
+    import moment from "moment-timezone";
     import { dragscroll } from 'vue-dragscroll';
 
     export default {
@@ -23,7 +23,8 @@
         props: ['assignments', 'courses'],
         filters: {
             relativeTime: function (date) {
-                return moment(date).fromNow();
+                // console.log(date + " " + moment(date, "DD MMM YYYY HH:mm:ss").fromNow())
+                return moment(date, "DD MMM YYYY HH:mm:ss").fromNow();
             }
         },
         mounted() {

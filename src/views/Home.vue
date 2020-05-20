@@ -6,7 +6,7 @@
                 <div class="card w-full p-6 mb-12">
                     <div class="flex flex-col-reverse sm:flex-row lg:h-56 justify-between">
                         <div class="flex flex-col justify-center w-full md:w-8/12">
-                            <h3>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME.toLowerCase() }}</span>!</h3>
+                            <h3>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME | lowerCase }}</span>!</h3>
                             <p class="pt-2">{{randomQuote}}</p>
                             <h4 class="mt-4">Your next class starting in 12 min.</h4>
                             <div class="text-gray-600 text-sm">
@@ -64,7 +64,7 @@
 
     import axios from "axios";
     import * as HtmlTableToJson from "html-table-to-json";
-    import moment from "moment";
+    import moment from "moment-timezone";
     import Assignments from "../components/Assignments";
     import { VueContentLoading } from 'vue-content-loading';
     import VideoConferences from "../components/VideoConferences";
@@ -288,8 +288,8 @@
             }
         },
         filters: {
-            relativeTime: function (date) {
-                return moment(date).fromNow();
+            lowerCase: function (string) {
+                return string ? string.toLowerCase() : string;
             }
         },
         async mounted() {

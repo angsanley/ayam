@@ -18,7 +18,7 @@
 </template>
 
 <script>
-    import moment from "moment";
+    import moment from "moment-timezone";
     import { dragscroll } from 'vue-dragscroll';
 
     export default {
@@ -26,7 +26,9 @@
         props: ['videoConferences', 'courses'],
         filters: {
             relativeTime: function (date) {
-                return moment(date).fromNow();
+                //Apr 23, 2020 09:20:00
+                // console.log(date + " " + moment(date, "MMM dd, YYYY HH:mm:ss").fromNow())
+                return moment(date, "MMM DD, YYYY HH:mm:ss").fromNow();
             }
         },
         mounted() {
