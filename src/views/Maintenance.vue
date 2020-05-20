@@ -13,7 +13,7 @@
                     <h3 class="font-light">Tunggu bentar ya...</h3>
 
                     <div class="mt-4">
-                        <Countdown v-if="currentMaintenanceTime" :end="currentMaintenanceTime" showDays showHours showMinutes showSeconds></Countdown>
+                        <Countdown v-if="currentMaintenanceTime" :end="currentMaintenanceTime" showDays showHours showMinutes showSeconds :endFunction="goToHome"></Countdown>
                     </div>
 <!--                    00.30 - 00.45-->
 <!--                    05.30 - 05.45-->
@@ -41,6 +41,11 @@
                 ],
                 currentMaintenanceTime: null,
                 test: "2025-03-16T00:42:24.000Z"
+            }
+        },
+        methods: {
+            goToHome() {
+                this.$router.push('/');
             }
         },
         mounted() {
