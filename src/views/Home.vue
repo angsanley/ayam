@@ -192,6 +192,9 @@
                                 e.endDate = `${e.Date} ${time[1]}`;
 
                                 this.videoConferences.push(e);
+
+                                // sort
+                                this.videoConferences = this.videoConferences.sort((a,b) => new moment(b.startDate) - new moment(a.startDate));
                             });
 
                             this.$Progress.finish();
@@ -234,6 +237,9 @@
                                 if (idx === array.length - 1){
                                     this.$Progress.finish();
                                     this.isLoading = false;
+
+                                    // sort
+                                    this.assignments = this.assignments.sort((a,b) => new moment(b.deadlineDuration) - new moment(a.deadlineDuration));
                                 }
                             })
                         })

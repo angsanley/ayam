@@ -20,8 +20,6 @@
 <script>
     import moment from "moment";
 
-
-
     export default {
         name: "VideoConferences",
         props: ['videoConferences', 'courses'],
@@ -30,6 +28,8 @@
                 return moment(date).fromNow();
             }
         },
+        mounted() {
+        }
     }
 </script>
 

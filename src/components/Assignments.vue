@@ -25,6 +25,8 @@
                 return moment(date).fromNow();
             }
         },
+        mounted() {
+        }
     }
 </script>
 
