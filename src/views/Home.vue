@@ -8,10 +8,15 @@
                         <div class="flex flex-col justify-center w-full md:w-8/12">
                             <h3>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME | lowerCase }}</span>!</h3>
                             <p class="pt-2">{{randomQuote}}</p>
-                            <h4 class="mt-4">Your next class starting in 12 min.</h4>
-                            <div class="text-gray-600 text-sm">
-                                <div><i class="mr-1 fas fa-book"/> Computer Networks</div>
-                                <div><i class="mr-1 fas fa-clock"/> Monday</div>
+                            <div v-if="nextClass">
+                                <h4 class="mt-4">Your next class starting {{ nextClass.startDate | relativeTime }}.</h4>
+                                <div class="text-gray-600 text-sm">
+                                    <div><i class="mr-1 fas fa-book"/> {{nextClass.COURSE_TITLE_LONG}}</div>
+                                    <div><i class="mr-1 fas fa-clock"/> {{nextClass.MEETING_TIME_START}} - {{nextClass.MEETING_TIME_END}}</div>
+                                </div>
+                            </div>
+                            <div v-if="!nextClass">
+                                <h4 class="mt-4">Time to relax. There's no class today.</h4>
                             </div>
                         </div>
                         <div class="flex mb-4 sm:mb-0 justify-center">
@@ -88,7 +93,8 @@
                         highlight: true,
                         dates: new moment().toDate()
                     }
-                ]
+                ],
+                nextClass: ""
             }
         },
         methods: {
@@ -313,6 +319,7 @@
                         this.$Progress.finish();
                         this.isLoading = false;
                         this.insertDatesToCalendar();
+                        this.getNextClass();
                     })
                     .catch((error) => {
                         console.log(error);
@@ -324,7 +331,7 @@
                 this.$Progress.start();
                 this.isLoading = true;
 
-                console.log(this.classSchedules.filter(c => {return c.ROOM === 400}))
+                // console.log(this.classSchedules.filter(c => {return c.ROOM === 400}))
 
                 // input class schedules
                 this.classSchedules.forEach(e => {
@@ -351,6 +358,20 @@
 
                     this.calendarDates.push(calendarObj);
                 });
+            },
+            getNextClass() {
+                let nextClasses = this.classSchedules.filter(c => {
+                    return moment(c.END_DT.substring(0,10)).isAfter(moment())
+                })
+
+                let nextClass = nextClasses[0];
+                nextClass.startDate = moment(`${nextClass.START_DT.substring(0,10)} ${nextClass.MEETING_TIME_START}`, "YYYY-MM-DD HH:mm").toDate();
+                nextClass.endDate = moment(`${nextClass.END_DT.substring(0,10)} ${nextClass.MEETING_TIME_END}`, "YYYY-MM-DD HH:mm").toDate();
+
+                if (moment(nextClass.startDate).isSame(moment(), 'day')
+                    || moment(nextClass.startDate).isSame(moment().add(1,'days'), 'day')) {
+                    this.nextClass = nextClass;
+                }
             }
         },
         computed: {
@@ -368,6 +389,10 @@
             }
         },
         filters: {
+            relativeTime: function (date, format) {
+                // console.log(date + " " + moment(date, "DD MMM YYYY HH:mm:ss").fromNow())
+                return moment(date, format).fromNow();
+            },
             lowerCase: function (string) {
                 return string ? string.toLowerCase() : string;
             }
