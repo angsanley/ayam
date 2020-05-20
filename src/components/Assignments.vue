@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="mb-2">Assignments</h3>
-        <div class="items" v-dragscroll>
+        <div class="items" v-dragscroll="window.width >= 1024">
             <div class="card assignment-card flex flex-shrink-0" v-for="assignment in this.assignments" :key="assignment.Title">
                 <div class="flex flex-col h-full justify-between">
                     <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
@@ -21,6 +21,27 @@
     export default {
         name: "Assignments",
         props: ['assignments', 'courses'],
+        data() {
+            return {
+                window: {
+                    width: 0,
+                    height: 0
+                }
+            }
+        },
+        created() {
+            window.addEventListener('resize', this.handleResize);
+            this.handleResize();
+        },
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize);
+        },
+        methods: {
+            handleResize() {
+                this.window.width = window.innerWidth;
+                this.window.height = window.innerHeight;
+            }
+        },
         filters: {
             relativeTime: function (date) {
                 // console.log(date + " " + moment(date, "DD MMM YYYY HH:mm:ss").fromNow())

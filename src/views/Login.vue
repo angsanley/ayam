@@ -3,7 +3,7 @@
         <div class="grid flex justify-center md:grid-cols-12">
             <div class="md:col-span-6 lg:col-span-7 flex justify-center">
                 <div class="container flex justify-center p-20">
-                    <img class="object-contain" src="../assets/img/login_vector.png" alt="login"/>
+                    <img class="h-64 md:h-auto object-contain" src="../assets/img/login_vector.png" alt="login"/>
                 </div>
             </div>
             <div class="md:col-span-6 lg:col-span-5 md:h-screen flex md:items-center">

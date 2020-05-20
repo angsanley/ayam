@@ -14,8 +14,8 @@
                                 <div><i class="mr-1 fas fa-clock"/> Monday</div>
                             </div>
                         </div>
-                        <div class="flex max-h-full mb-4 sm:mb-0">
-                            <img class="max-h-full mr-0 object-contain" src="../assets/img/study.png" alt="study"/>
+                        <div class="flex mb-4 sm:mb-0 justify-center">
+                            <img class="lg:max-h-full h-64 mr-0 object-contain" src="../assets/img/study.png" alt="study"/>
                         </div>
                     </div>
                 </div>

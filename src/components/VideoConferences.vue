@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="mb-2">Video Conferences</h3>
-        <div class="items" v-dragscroll>
+        <div class="items" v-dragscroll="window.width >= 1024">
             <div class="card assignment-card flex flex-shrink-0" v-for="videoConference in this.videoConferences" :key="videoConference.Title">
                 <div class="flex flex-col h-full justify-between">
                     <div>
@@ -24,6 +24,27 @@
     export default {
         name: "VideoConferences",
         props: ['videoConferences', 'courses'],
+        data() {
+            return {
+                window: {
+                    width: 0,
+                    height: 0
+                }
+            }
+        },
+        created() {
+            window.addEventListener('resize', this.handleResize);
+            this.handleResize();
+        },
+        destroyed() {
+            window.removeEventListener('resize', this.handleResize);
+        },
+        methods: {
+            handleResize() {
+                this.window.width = window.innerWidth;
+                this.window.height = window.innerHeight;
+            }
+        },
         filters: {
             relativeTime: function (date) {
                 //Apr 23, 2020 09:20:00
