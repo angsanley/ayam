@@ -1,10 +1,10 @@
 <template>
     <div class="home pt-8">
         <div class="grid grid-cols-12">
-            <div class="lg:col-span-9 col-span-12 w-full px-6 md:px-8 lg:px-10">
+            <div class="xl:col-span-9 lg:col-span-8 col-span-12 w-full px-6 md:px-8 lg:px-10">
 
                 <div class="card w-full p-6 mb-12">
-                    <div class="flex flex-col-reverse sm:flex-row lg:h-56 justify-between">
+                    <div class="flex flex-col-reverse sm:flex-row justify-between">
                         <div class="flex flex-col justify-center w-full md:w-8/12">
                             <h3>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME | lowerCase }}</span>!</h3>
                             <p class="pt-2">{{randomQuote}}</p>
@@ -44,7 +44,7 @@
 
             </div>
 
-            <div class="lg:col-span-3 col-span-12 px-6 md:px-8 lg:px-10">
+            <div class="xl:col-span-3 lg:col-span-4 col-span-12 pr-6 md:pr-8 lg:pr-4 xl:pr-10">
                 <h3>Your Schedule</h3>
                 <div class="mt-4">
                     <vc-calendar class="shadow-md border-none" is-expanded :attributes="calendarDates"/>

@@ -84,6 +84,14 @@ a {
     border: none !important;
 }
 
+.vc-container {
+    font-family: Inter, sans-serif !important;
+}
+
+.vc-title {
+    font-family: Quicksand, sans-serif;
+}
+
 .vc-day-box-center-center {
     @apply p-1;
 }
