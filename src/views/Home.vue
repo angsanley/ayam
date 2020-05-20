@@ -47,7 +47,7 @@
             <div class="lg:col-span-3 col-span-12 px-6 md:px-8 lg:px-10">
                 <h3>Your Schedule</h3>
                 <div class="mt-4">
-                    <vc-calendar :attributes="calendarDates"/>
+                    <vc-calendar is-expanded :attributes="calendarDates"/>
                 </div>
             </div>
         </div>
