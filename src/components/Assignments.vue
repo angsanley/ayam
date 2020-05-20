@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="mb-2">Assignments</h3>
-        <div class="items">
+        <vue-custom-scrollbar class="scroll-area items" v-dragscroll>
             <div class="card assignment-card flex flex-shrink-0" v-for="assignment in this.assignments" :key="assignment.Title">
                 <div class="flex flex-col h-full justify-between">
                     <h5>{{courses.find(e => e.CLASS_NBR === assignment.classNbr).COURSENAME}}</h5>
@@ -10,23 +10,31 @@
                     <!--                        <a :href="`https://binusmaya.binus.ac.id/services/ci/index.php/general/downloadDocument/${assignment.assignmentPathLocation}`">Download file</a>-->
                 </div>
             </div>
-        </div>
+        </vue-custom-scrollbar>
     </div>
 </template>
 
 <script>
     import moment from "moment";
+    import { dragscroll } from 'vue-dragscroll';
+    import vueCustomScrollbar from 'vue-custom-scrollbar'
 
     export default {
         name: "Assignments",
         props: ['assignments', 'courses'],
+        components: {
+            vueCustomScrollbar
+        },
         filters: {
             relativeTime: function (date) {
                 return moment(date).fromNow();
             }
         },
         mounted() {
-        }
+        },
+        directives: {
+            'dragscroll': dragscroll
+        },
     }
 </script>
 
