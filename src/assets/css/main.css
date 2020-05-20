@@ -73,5 +73,5 @@ a {
 }
 
 .card {
-    @apply rounded-lg overflow-hidden shadow-md bg-white;
+    @apply rounded-lg overflow-hidden shadow-lg bg-white;
 }

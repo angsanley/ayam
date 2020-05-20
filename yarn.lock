@@ -5983,11 +5983,6 @@ pbkdf2@^3.0.3:
     safe-buffer "^5.0.1"
     sha.js "^2.4.8"
 
-perfect-scrollbar@^1.5.0:
-  version "1.5.0"
-  resolved "https://registry.yarnpkg.com/perfect-scrollbar/-/perfect-scrollbar-1.5.0.tgz#821d224ed8ff61990c23f26db63048cdc75b6b83"
-  integrity sha512-NrNHJn5mUGupSiheBTy6x+6SXCFbLlm8fVZh9moIzw/LgqElN5q4ncR4pbCBCYuCJ8Kcl9mYM0NgDxvW+b4LxA==
-
 performance-now@^2.1.0:
   version "2.1.0"
   resolved "https://registry.npm.taobao.org/performance-now/download/performance-now-2.1.0.tgz?cache=0&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fperformance-now%2Fdownload%2Fperformance-now-2.1.0.tgz#6309f4e0e5fa913ec1c69307ae364b4b377c9e7b"
@@ -8150,19 +8145,6 @@ vue-content-loading@^1.6.0:
   integrity sha512-D8vVW8eUhDE1VsX/gMRKjgNEVlPG4E4jKCuQjiv75VwnznFRjCGpoU2LABrSzmf6V/hb8ow8rHrFPuz3jVNsqA==
   dependencies:
     vue "^2.5.13"
-
-vue-custom-scrollbar@^1.2.0:
-  version "1.2.0"
-  resolved "https://registry.yarnpkg.com/vue-custom-scrollbar/-/vue-custom-scrollbar-1.2.0.tgz#3579e1745016795c081e48f20a98a5d80d240626"
-  integrity sha512-fz8RnNeqKpRG7ErBWCyAtrdGYqQEp1PS2P++6aubfxQ6oOmmhcJUpRvs/da4gex8p/PUorF4TsUXC0N2nsP9sw==
-  dependencies:
-    perfect-scrollbar "^1.5.0"
-    vue "^2.6.11"
-
-vue-dragscroll@^2.1.0:
-  version "2.1.0"
-  resolved "https://registry.yarnpkg.com/vue-dragscroll/-/vue-dragscroll-2.1.0.tgz#5be18df3ea41b3fab9d0593780194ed08d22418a"
-  integrity sha512-ZNcvOdrnq9w4US2RqZOfp2cCJzEz1p4xZ1w4I+xKSAFlEOrXbryLe/iclspHH57dco5QT3Azd8/KD930WzadiQ==
 
 vue-eslint-parser@^7.0.0:
   version "7.1.0"
