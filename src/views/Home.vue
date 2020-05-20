@@ -1,17 +1,33 @@
 <template>
-    <div class="home pt-8 pl-10 pr-10">
-        <!--        <div class="card w-full p-6">-->
-        <!--            <h3>Hi, <span class="capitalize">{{ binusianData.FIRST_NAME.toLowerCase() }}</span>!</h3>-->
-        <!--            <p class="pt-2">You have</p>-->
-        <!--        </div>-->
+    <div class="home pt-8 ">
+        <div class="grid grid-cols-12">
+            <div class="lg:col-span-9 md:col-span-8 col-span-12 w-full px-6 md:px-8 lg:px-10">
 
-        <div class="w-full">
-            <vue-content-loading v-if="isLoading" :width="300" :height="20">
-                <rect x="0" width="50" height="20" />
-                <rect x="55" width="50" height="20" />
-                <rect x="110" width="50" height="20" />
-            </vue-content-loading>
-            <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
+                <div class="card w-full p-6 mb-12">
+                    <div class="flex flex-col-reverse sm:flex-row sm:h-56 justify-between">
+                        <div class="flex flex-col justify-center w-full md:w-8/12">
+                            <h4>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME.toLowerCase() }}</span>!</h4>
+                            <p class="pt-2">{{randomQuote}}</p>
+                        </div>
+                        <div class="flex max-h-full mb-4 sm:mb-0">
+                            <img class="max-h-full mr-0 object-contain" src="../assets/img/study.png" alt="study"/>
+                        </div>
+                    </div>
+                </div>
+
+                <vue-content-loading v-if="isLoading" :width="300" :height="20">
+                    <rect x="0" width="50" height="20" />
+                    <rect x="55" width="50" height="20" />
+                    <rect x="110" width="50" height="20" />
+                </vue-content-loading>
+
+                <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
+
+            </div>
+
+            <div class="lg:col-span-3 md:col-span-4 col-span-12 px-6 md:px-8 lg:px-10">
+                d
+            </div>
         </div>
     </div>
 </template>
@@ -42,7 +58,8 @@
                 courses: [],
                 videoConferences: [],
                 assignments: [],
-                isLoading: false
+                isLoading: false,
+                randomQuote: ""
             }
         },
         methods: {
@@ -199,10 +216,43 @@
                             this.isLoading = false;
                         });
                 });
-                this.$Progress.finish();
             },
+            getRandomQuote() {
+                // https://quotes.rest/qod?category=students&language=en
+                this.$Progress.start();
+                this.isLoading = true;
+                axios.request({
+                    url: "https://bimayproxy.herokuapp.com/fetch/https://quotes.rest/qod?language=en",
+                    method: "get",
+                    headers: {
+                        Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
+                    }
+                })
+                    .then((response) => {
+                        this.randomQuote = response.data.contents.quotes[0].quote;
+                        this.$Progress.finish();
+                        this.isLoading = false;
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$Progress.fail();
+                        this.isLoading = false;
+                    });
+            }
         },
         computed: {
+            greetings: function() {
+                const today = new Date()
+                const curHr = today.getHours()
+
+                if (curHr < 12) {
+                    return "Good morning"
+                } else if (curHr < 18) {
+                    return "Good afternoon"
+                } else {
+                    return "Good evening"
+                }
+            }
         },
         filters: {
             relativeTime: function (date) {
@@ -213,6 +263,7 @@
             await this.checkSession();
             await this.getBinusianData();
             await this.getCourses();
+            await this.getRandomQuote();
         }
     }
 </script>
