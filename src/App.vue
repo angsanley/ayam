@@ -19,10 +19,12 @@
 <style>
   .content {
     padding-left: 0;
+    padding-bottom: 4rem;
   }
   @media (min-width: 1024px) {
     .content {
       padding-left: 6rem;
+      padding-bottom: 0;
     }
   }
 </style>
