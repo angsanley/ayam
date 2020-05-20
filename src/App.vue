@@ -18,7 +18,12 @@
 
 <style>
   .content {
-    padding-left: 6rem;
+    padding-left: 0;
+  }
+  @media (min-width: 1024px) {
+    .content {
+      padding-left: 6rem;
+    }
   }
 </style>
 <script>
