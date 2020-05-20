@@ -45,10 +45,7 @@
             </div>
 
             <div class="lg:overflow-y-scroll h-full pb-8 pl-6 lg:pl-2 xl:col-span-3 lg:col-span-4 col-span-12 pr-6 md:pr-8 lg:pr-4 xl:pr-10">
-                <h3>Your Schedule</h3>
-                <div class="mt-4">
-                    <vc-calendar class="shadow-md border-none" is-expanded :attributes="calendarDates"/>
-                </div>
+                <your-schedule :calendar-dates="calendarDates"/>
             </div>
         </div>
     </div>
@@ -71,10 +68,11 @@
     import Assignments from "../components/Assignments";
     import { VueContentLoading } from 'vue-content-loading';
     import VideoConferences from "../components/VideoConferences";
+    import YourSchedule from "../components/YourSchedule";
 
     export default {
         name: 'Home',
-        components: {VideoConferences, Assignments, VueContentLoading},
+        components: {YourSchedule, VideoConferences, Assignments, VueContentLoading},
         data() {
             return {
                 binusianData: {},
@@ -123,6 +121,12 @@
                     })
                     .catch((error) => {
                         console.log(error);
+
+                        if (error.response.status === 404) {
+                            // maybe maintenance
+                            this.$router.push('/maintenance');
+                        }
+
                         this.$Progress.fail();
                     });
             },
@@ -319,6 +323,8 @@
             insertDatesToCalendar() {
                 this.$Progress.start();
                 this.isLoading = true;
+
+                console.log(this.classSchedules.filter(c => {return c.ROOM === 400}))
 
                 // input class schedules
                 this.classSchedules.forEach(e => {
