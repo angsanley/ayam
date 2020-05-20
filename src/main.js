@@ -6,6 +6,11 @@ import router from './router'
 import store from './store'
 import VueProgressBar from 'vue-progressbar'
 import moment from 'moment-timezone';
+import VCalendar from 'v-calendar';
+
+moment.tz.setDefault("Asia/Jakarta");
+
+Vue.use(VueTailwind)
 
 Vue.use(VueProgressBar, {
   color: '#0090D1',
@@ -13,9 +18,10 @@ Vue.use(VueProgressBar, {
   height: '2px'
 })
 
-moment.tz.setDefault("Asia/Jakarta");
+Vue.use(VCalendar, {
+  componentPrefix: 'vc'
+});
 
-Vue.use(VueTailwind)
 Vue.config.productionTip = false
 
 new Vue({

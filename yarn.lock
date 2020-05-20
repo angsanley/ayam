@@ -2760,7 +2760,7 @@ dashdash@^1.12.0:
   dependencies:
     assert-plus "^1.0.0"
 
-date-fns@^2.0.1:
+date-fns@^2.0.1, date-fns@^2.6.0:
   version "2.14.0"
   resolved "https://registry.yarnpkg.com/date-fns/-/date-fns-2.14.0.tgz#359a87a265bb34ef2e38f93ecf63ac453f9bc7ba"
   integrity sha512-1zD+68jhFgDIM0rF05rcwYO8cExdNqxjq4xP1QKM60Q45mnO6zaMWB4tOzrIr4M4GSLntsKeE4c9Bdl2jhL/yw==
@@ -6067,7 +6067,7 @@ pnp-webpack-plugin@^1.6.4:
   dependencies:
     ts-pnp "^1.1.6"
 
-popper.js@^1.15.0:
+popper.js@^1.14.7, popper.js@^1.15.0:
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/popper.js/-/popper.js-1.16.1.tgz#2a223cb3dc7b6213d740e40372be40de43e65b1b"
   integrity sha512-Wb4p1J4zyFTbM+u6WuO4XstYx4Ky9Cewe4DWrel7B0w6VVICvPwdOpotjzcf6eD8TsckVnIMNONQyPIUFOUbCQ==
@@ -8113,6 +8113,15 @@ uuid@^3.3.2, uuid@^3.4.0:
   version "3.4.0"
   resolved "https://registry.npm.taobao.org/uuid/download/uuid-3.4.0.tgz?cache=0&sync_timestamp=1588194481220&other_urls=https%3A%2F%2Fregistry.npm.taobao.org%2Fuuid%2Fdownload%2Fuuid-3.4.0.tgz#b23e4358afa8a202fe7a100af1f5f883f02007ee"
   integrity sha1-sj5DWK+oogL+ehAK8fX4g/AgB+4=
+
+v-calendar@^1.0.6:
+  version "1.0.6"
+  resolved "https://registry.yarnpkg.com/v-calendar/-/v-calendar-1.0.6.tgz#004e2beb3c21601490c793c58897a4b7c9d8cec9"
+  integrity sha512-tdbxBS1cF4qeXedBBMYYqyt/G0hUke3xLkpoxstTG1NZKYz+KPLAVPBZOxbedLyjn9WpfoEsC9mktvyYDrcp/A==
+  dependencies:
+    date-fns "^2.6.0"
+    lodash "^4.17.11"
+    popper.js "^1.14.7"
 
 v8-compile-cache@^2.0.3:
   version "2.1.0"

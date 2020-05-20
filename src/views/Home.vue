@@ -45,7 +45,10 @@
             </div>
 
             <div class="lg:col-span-3 col-span-12 px-6 md:px-8 lg:px-10">
-                d
+                <h3>Your Schedule</h3>
+                <div class="mt-4">
+                    <vc-calendar :attributes="calendarDates"/>
+                </div>
             </div>
         </div>
     </div>
@@ -77,9 +80,17 @@
                 binusianData: {},
                 courses: [],
                 videoConferences: [],
+                classSchedules: [],
                 assignments: [],
                 isLoading: false,
-                randomQuote: ""
+                randomQuote: "",
+                calendarDates: [
+                    {
+                        key: 'today',
+                        highlight: true,
+                        dates: new moment().toDate()
+                    }
+                ]
             }
         },
         methods: {
@@ -271,6 +282,59 @@
                         this.$Progress.fail();
                         this.isLoading = false;
                     });
+            },
+            getClassSchedules() {
+                // https://binusmaya.binus.ac.id/services/ci/index.php/student/class_schedule/classScheduleGetStudentClassSchedule
+                this.$Progress.start();
+                this.isLoading = true;
+
+                axios.request({
+                    url: "https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/student/class_schedule/classScheduleGetStudentClassSchedule",
+                    method: "get",
+                    headers: {
+                        Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
+                    }
+                })
+                    .then((response) => {
+                        this.classSchedules = response.data;
+                        this.$Progress.finish();
+                        this.isLoading = false;
+                        this.insertDatesToCalendar();
+                    })
+                    .catch((error) => {
+                        console.log(error);
+                        this.$Progress.fail();
+                        this.isLoading = false;
+                    });
+            },
+            insertDatesToCalendar() {
+                this.$Progress.start();
+                this.isLoading = true;
+
+                this.classSchedules.forEach(e => {
+                    let dot = true;
+                    if (e.N_DELIVERY_MODE === "GSLC") {
+                        dot = "red";
+                    } else if (e.N_DELIVERY_MODE === "F2F") {
+                        dot = "orange";
+                    } else if (e.N_DELIVERY_MODE === "VC") {
+                        dot = "green";
+                    }
+
+                    const calendarObj = {
+                        key: `${e.CRSE_CODE}-${e.SessionIDNum}`,
+                        dot,
+                        dates: [
+                            { start: new moment(`${e.START_DT.substring(0,10)} ${e.MEETING_TIME_START}`, "YYYY-MM-DD HH:mm").toDate(),
+                                end: new moment(`${e.END_DT.substring(0,10)} ${e.MEETING_TIME_END}`, "YYYY-MM-DD HH:mm").toDate() }
+                        ],
+                        popover: {
+                            label: `${e.MEETING_TIME_START} - ${e.N_DELIVERY_MODE} - ${e.COURSE_TITLE_LONG} (${e.SSR_COMPONENT})`,
+                        },
+                    };
+
+                    this.calendarDates.push(calendarObj);
+                });
             }
         },
         computed: {
@@ -297,6 +361,7 @@
             await this.getBinusianData();
             await this.getCourses();
             await this.getRandomQuote();
+            await this.getClassSchedules();
         }
     }
 </script>
