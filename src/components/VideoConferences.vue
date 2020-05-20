@@ -1,7 +1,7 @@
 <template>
     <div>
         <h3 class="mb-2">Video Conferences</h3>
-        <perfect-scrollbar class="items" v-dragscroll="window.width >= 1024">
+        <perfect-scrollbar :options="{handlers: ['wheel', 'touch']}" class="items" v-dragscroll="window.width >= 1024">
             <div class="card assignment-card flex flex-shrink-0" v-for="videoConference in this.videoConferences" :key="videoConference.Title">
                 <div class="flex flex-col h-full justify-between">
                     <div>
