@@ -1,4 +1,4 @@
-import Client from './Clients/BimayAxiosClient';
+import Client from '../Clients/BimayAxiosClient';
 
 const resource = '/staff/init/check_session';
 

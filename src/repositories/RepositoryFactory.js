@@ -1,5 +1,5 @@
 import DailyQuoteRepository from './DailyQuoteRepository';
-import SessionRepository from "./SessionRepository";
+import SessionRepository from "./BimayRepository/SessionRepository";
 
 const repositories = {
     'dailyQuotes': DailyQuoteRepository,
