@@ -72,6 +72,7 @@
     }
 
     .items {
+        cursor: grab;
         white-space: nowrap;
         overflow-x: auto;
         @apply px-2 pt-2 pb-8 flex;
