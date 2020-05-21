@@ -54,6 +54,7 @@
             let array = this.maintenanceTimes.filter(time => {
                 return moment(time.end).isAfter(moment());
             });
+            
             array.sort(function (a, b) {
                 if (moment(a.end).isBefore(moment(b.end))) {
                     return -1;
@@ -62,7 +63,12 @@
                 }
                 return 0;
             })
-            this.currentMaintenanceTime = moment.utc(array[0].end).format();
+
+            if (array.length > 0) {
+                this.currentMaintenanceTime = moment.utc(array[0].end).format();
+            } else {
+                this.currentMaintenanceTime = moment.utc(this.maintenanceTimes[0].end).format();
+            }
         },
     }
 </script>
