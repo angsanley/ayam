@@ -8,19 +8,19 @@
                         <div class="flex flex-col justify-center w-full md:w-8/12">
                             <h3>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME | lowerCase }}</span>!</h3>
                             <p class="pt-2">{{randomQuote}}</p>
-                            <div v-if="nextClass">
+                            <div v-if="nextClass !== -1 && nextClass">
                                 <h4 class="mt-4">Your next class starting {{ nextClass.startDate | relativeTime }}.</h4>
                                 <div class="text-gray-600 text-sm">
                                     <div><i class="mr-1 fas fa-book"/> {{nextClass.COURSE_TITLE_LONG}}</div>
                                     <div><i class="mr-1 fas fa-clock"/> {{nextClass.MEETING_TIME_START}} - {{nextClass.MEETING_TIME_END}}</div>
                                 </div>
                             </div>
-                            <div v-if="!nextClass">
+                            <div v-if="nextClass === -1">
                                 <h4 class="mt-4">Time to relax. There's no class today.</h4>
                             </div>
                         </div>
                         <div class="flex mb-4 sm:mb-0 justify-center">
-                            <img class="lg:max-h-full h-64 mr-0 object-contain" src="../../assets/img/study.png" alt="study"/>
+                            <img class="lg:max-h-full h-40 mr-0 object-contain" src="../../assets/img/study.png" alt="study"/>
                         </div>
                     </div>
                 </div>
@@ -352,6 +352,8 @@
                 if (moment(nextClass.startDate).isSame(moment(), 'day')
                     || moment(nextClass.startDate).isSame(moment().add(1,'days'), 'day')) {
                     this.nextClass = nextClass;
+                } else {
+                    this.nextClass = -1;
                 }
             },
         },
