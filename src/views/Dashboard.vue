@@ -8,7 +8,7 @@
 </template>
 
 <script>
-    import TheNav from "../components/TheNav";
+    import TheNav from "../components/Dashboard/TheNav";
     export default {
         name: "Dashboard",
         components: {TheNav}

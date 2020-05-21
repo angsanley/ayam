@@ -23,7 +23,7 @@
         </div>
 
         <div class="navbar">
-            <img class="logo" src="../assets/ayam_logo.svg" alt="logo"/>
+            <img class="logo" src="../../assets/ayam_logo.svg" alt="logo"/>
             aasdas
         </div>
     </div>
@@ -70,6 +70,10 @@
     }
 
     @media (min-width: 1024px) {
+        .navbar {
+            @apply bg-gray-100 shadow-none;
+        }
+
         .logo {
             @apply pl-24;
         }
@@ -79,7 +83,7 @@
             width: 6rem;
             min-height: 100vh;
             color: white;
-            background: #168dc9;
+            background: #1E87C9;
         }
 
         .nav {
