@@ -73,9 +73,7 @@
     import { VueContentLoading } from 'vue-content-loading';
     import VideoConferences from "../../components/VideoConferences";
     import YourSchedule from "../../components/YourSchedule";
-    import Repository from "../../repositories/RepositoryFactory";
-
-
+    import Repositories from "../../repositories/RepositoryFactory";
 
     export default {
         name: 'Home',
@@ -101,7 +99,7 @@
         },
         methods: {
             async checkSession() {
-                const SessionFactory = Repository.get("session");
+                const SessionFactory = Repositories.get("session");
 
                 this.$Progress.start();
 
@@ -111,12 +109,22 @@
                     await this.$router.push('/login');
                 }
 
-                const { data } = await SessionFactory.check();
+                try {
+                    const { data } = await SessionFactory.check();
 
-                if (data.RoleID === 0) {
-                    // redirect to login
-                    await this.$store.dispatch('isAuthenticated', false);
-                    await this.$router.push('/login');
+                    if (data.RoleID === 0) {
+                        // redirect to login
+                        await this.$store.dispatch('isAuthenticated', false);
+                        await this.$router.push('/login');
+                    }
+                } catch (error) {
+                    this.$Progress.fail();
+                    if (error.response) {
+                        if (error.response.status === 404) {
+                            // maybe in maintenance mode
+                            await this.$router.push('/maintenance');
+                        }
+                    }
                 }
 
                 this.$Progress.finish();
@@ -266,9 +274,13 @@
                 });
             },
             async getRandomQuote() {
-                const DailyQuoteRepository = Repository.get("dailyQuotes");
-                const { data } = await DailyQuoteRepository.get();
-                this.randomQuote = data.contents.quotes[0].quote;
+                const DailyQuoteRepository = Repositories.get("dailyQuotes");
+                try {
+                    const { data } = await DailyQuoteRepository.get();
+                    this.randomQuote = data.contents.quotes[0].quote;
+                } catch (error) {
+                    console.log(error);
+                }
             },
             getClassSchedules() {
                 // https://binusmaya.binus.ac.id/services/ci/index.php/student/class_schedule/classScheduleGetStudentClassSchedule
