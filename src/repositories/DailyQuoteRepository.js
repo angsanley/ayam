@@ -1,13 +1,9 @@
 import Client from './Clients/QuoteAxiosClient';
 
-const resource = '/qod';
+const resource = '/quotes';
 
 export default {
     get() {
-        return Client.get(`${resource}`, {
-            params: {
-                language: 'en'
-            }
-        });
+        return Client.get(`${resource}`);
     }
 };

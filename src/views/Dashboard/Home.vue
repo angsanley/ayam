@@ -277,7 +277,8 @@
                 const DailyQuoteRepository = Repositories.get("dailyQuotes");
                 try {
                     const { data } = await DailyQuoteRepository.get();
-                    this.randomQuote = data.contents.quotes[0].quote;
+                    const quote = data[Math.floor(Math.random() * data.length)];
+                    this.randomQuote = `${quote.text} - ${quote.author}`;
                 } catch (error) {
                     console.log(error);
                 }

@@ -1,8 +1,7 @@
 import axios from "axios";
 
-const proxyDomain = "https://bimayproxy.herokuapp.com/fetch";
-const baseDomain = "https://quotes.rest";
-const baseURL = `${proxyDomain}/${baseDomain}`;
+const baseDomain = "https://type.fit/api";
+const baseURL = `${baseDomain}`;
 
 export default axios.create({
     baseURL,
