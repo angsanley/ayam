@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
+import DashboardHome from '../views/Dashboard/Home.vue'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -24,6 +25,14 @@ Vue.use(VueRouter)
     path: '/maintenance',
     name: 'Maintenance',
     component: () => import('../views/Maintenance.vue')
+  },
+  {
+    path: '/dashboard',
+    name: 'Dashboard',
+    component: () => import('../views/Dashboard.vue'),
+    children: [
+      { path: '/', component: DashboardHome },
+    ]
   }
 ]
 

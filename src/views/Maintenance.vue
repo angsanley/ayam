@@ -1,6 +1,9 @@
 <template>
-    <div>
-        <div class="grid flex justify-center md:grid-cols-12 h-full">
+    <div class="h-screen">
+        <div class="navbar">
+            <img class="logo" src="../assets/ayam_logo.svg" alt="logo"/>
+        </div>
+        <div class="grid flex justify-center md:grid-cols-12">
             <div class="md:col-span-6 lg:col-span-7 flex justify-center">
                 <div class="container flex justify-center p-20">
                     <img class="h-64 md:h-auto object-contain" src="../assets/img/maintenance.png" alt="maintenance"/>
@@ -65,5 +68,11 @@
 </script>
 
 <style scoped>
-
+    .navbar {
+        @apply relative h-16 py-1 px-6 text-gray-900 text-left float-none fixed flex justify-between items-center z-30;
+        width: 100vw;
+    }
+    .logo {
+        @apply h-full pt-3 pb-3 object-scale-down object-left;
+    }
 </style>

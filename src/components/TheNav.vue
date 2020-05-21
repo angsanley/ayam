@@ -1,24 +1,30 @@
 <template>
-    <div class="navbar">
-        <img class="hidden lg:block" src="../assets/logo.png" alt="logo"/>
+    <div>
+        <div class="sidenavbar">
 
-        <ul class="nav list-none lg:mt-8">
-            <li>
-                <router-link to="/" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" exact-active-class="link-active">
-                    <i class="w-8 fas fa-home p-2"/>
-                    <span class="mx-2 text-sm">Home</span>
-                </router-link>
-            </li>
-            <li>
-                <router-link to="/as" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" active-class="link-active">
-                    <i class="w-8 fas fa-home p-2"/>
-                    <span class="mx-2 text-sm">Page 2</span>
-                </router-link>
-            </li>
-        </ul>
+            <ul class="nav list-none">
+                <li>
+                    <router-link to="/dashboard" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" exact-active-class="link-active">
+                        <i class="w-8 fas fa-home p-2"/>
+                        <span class="mx-2 text-sm">Home</span>
+                    </router-link>
+                </li>
+                <li>
+                    <router-link to="/as" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" active-class="link-active">
+                        <i class="w-8 fas fa-home p-2"/>
+                        <span class="mx-2 text-sm">Page 2</span>
+                    </router-link>
+                </li>
+            </ul>
 
-        <div class="absolute bottom-0 pb-4">
-            asd
+            <div class="absolute bottom-0 pb-4">
+                asd
+            </div>
+        </div>
+
+        <div class="navbar">
+            <img class="logo" src="../assets/ayam_logo.svg" alt="logo"/>
+            aasdas
         </div>
     </div>
 </template>
@@ -31,10 +37,19 @@
 
 <style scoped>
     .navbar {
-        @apply relative py-1 px-6 text-gray-900 bg-white text-left float-none fixed bottom-0 z-50;
+        @apply relative h-16 py-1 px-6 text-gray-900 bg-white text-left float-none fixed flex justify-between items-center shadow-md z-30;
+        width: 100vw;
+    }
+
+    .sidenavbar {
+        @apply relative py-1 px-6 text-gray-900 bg-white text-left float-none fixed bottom-0 z-40;
         width: 100vw;
         height: 4rem;
         box-shadow: 0 -10px 15px -3px rgba(0, 0, 0, 0.05), 0 -4px 6px -2px rgba(0, 0, 0, 0.025);
+    }
+
+    .logo {
+        @apply h-full pt-3 pb-3 object-scale-down object-left;
     }
 
     .link {
@@ -55,11 +70,16 @@
     }
 
     @media (min-width: 1024px) {
-        .navbar {
+        .logo {
+            @apply pl-24;
+        }
+
+        .sidenavbar {
             @apply py-8 px-4 float-left;
             width: 6rem;
             min-height: 100vh;
-            box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04);
+            color: white;
+            background: #168dc9;
         }
 
         .nav {
@@ -71,7 +91,7 @@
         }
 
         .link-active {
-            @apply bg-gray-200;
+            @apply bg-white;
         }
     }
 </style>
