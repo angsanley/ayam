@@ -28,10 +28,9 @@ Vue.use(VueRouter)
   },
   {
     path: '/dashboard',
-    name: 'Dashboard',
     component: () => import('../views/Dashboard.vue'),
     children: [
-      { path: '/', component: DashboardHome },
+      { path: '/', name: 'Dashboard', component: DashboardHome },
     ]
   }
 ]

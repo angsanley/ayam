@@ -73,6 +73,9 @@
     import { VueContentLoading } from 'vue-content-loading';
     import VideoConferences from "../../components/VideoConferences";
     import YourSchedule from "../../components/YourSchedule";
+    import Repository from "../../repositories/RepositoryFactory";
+
+
 
     export default {
         name: 'Home',
@@ -97,43 +100,26 @@
             }
         },
         methods: {
-            checkSession() {
+            async checkSession() {
+                const SessionFactory = Repository.get("session");
+
                 this.$Progress.start();
 
                 if (!this.$store.getters.isAuthenticated || this.$store.state.phpsessid === '') {
                     // redirect to login
-                    this.$store.dispatch('isAuthenticated', false);
-                    this.$router.push('/login');
+                    await this.$store.dispatch('isAuthenticated', false);
+                    await this.$router.push('/login');
                 }
 
-                axios.request({
-                    url: "https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/staff/init/check_session",
-                    method: "get",
-                    headers: {
-                        Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
-                    }
-                })
-                    .then((response) => {
-                        const sessionStatus = response.data;
+                const { data } = await SessionFactory.check();
 
-                        if (sessionStatus.RoleID === 0) {
-                            // redirect to login
-                            this.$store.dispatch('isAuthenticated', false);
-                            this.$router.push('/login');
-                        }
+                if (data.RoleID === 0) {
+                    // redirect to login
+                    await this.$store.dispatch('isAuthenticated', false);
+                    await this.$router.push('/login');
+                }
 
-                        this.$Progress.finish();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-
-                        if (error.response.status === 404) {
-                            // maybe maintenance
-                            this.$router.push('/maintenance');
-                        }
-
-                        this.$Progress.fail();
-                    });
+                this.$Progress.finish();
             },
             getBinusianData() {
                 // https://binusmaya.binus.ac.id/services/ci/index.php/general/getBinusianData
@@ -279,27 +265,10 @@
                         });
                 });
             },
-            getRandomQuote() {
-                // https://quotes.rest/qod?category=students&language=en
-                this.$Progress.start();
-                this.isLoading = true;
-                axios.request({
-                    url: "https://bimayproxy.herokuapp.com/fetch/https://quotes.rest/qod?language=en",
-                    method: "get",
-                    headers: {
-                        Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
-                    }
-                })
-                    .then((response) => {
-                        this.randomQuote = response.data.contents.quotes[0].quote;
-                        this.$Progress.finish();
-                        this.isLoading = false;
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$Progress.fail();
-                        this.isLoading = false;
-                    });
+            async getRandomQuote() {
+                const DailyQuoteRepository = Repository.get("dailyQuotes");
+                const { data } = await DailyQuoteRepository.get();
+                this.randomQuote = data.contents.quotes[0].quote;
             },
             getClassSchedules() {
                 // https://binusmaya.binus.ac.id/services/ci/index.php/student/class_schedule/classScheduleGetStudentClassSchedule
@@ -371,7 +340,7 @@
                     || moment(nextClass.startDate).isSame(moment().add(1,'days'), 'day')) {
                     this.nextClass = nextClass;
                 }
-            }
+            },
         },
         computed: {
             greetings: function() {
@@ -396,12 +365,12 @@
                 return string ? string.toLowerCase() : string;
             }
         },
-        async mounted() {
-            await this.checkSession();
-            await this.getBinusianData();
-            await this.getCourses();
-            await this.getRandomQuote();
-            await this.getClassSchedules();
+        mounted() {
+            this.checkSession();
+            this.getBinusianData();
+            this.getCourses();
+            this.getRandomQuote();
+            this.getClassSchedules();
         }
     }
 </script>
