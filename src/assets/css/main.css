@@ -81,6 +81,34 @@ a {
     @apply rounded-lg overflow-hidden shadow-md bg-white;
 }
 
+/*Dirty hacks*/
+/* purgecss start ignore */
+.vc-border {
+    border: none !important;
+}
+
+.vc-container {
+    font-family: Inter, sans-serif !important;
+}
+
+.vc-title {
+    font-family: Quicksand, sans-serif;
+}
+
+.vc-day-box-center-center {
+    @apply p-1;
+}
+
+.vc-rounded-full {
+    height: 2rem !important;
+    width: 2rem !important;
+}
+
+.vc-bg-blue-600 {
+    background: theme('colors.primary') !important;
+    box-shadow: 0 7px 8px -3px rgba(48, 168, 230, 0.5);
+}
+
 .notification-box {
     @apply px-4 py-2 shadow-lg bg-blue-500 m-2 rounded-lg;
 }
@@ -107,33 +135,5 @@ a {
 
 .notification-box .notification-content {
     @apply text-sm;
-}
-
-/*Dirty hacks for VC Calender*/
-/* purgecss start ignore */
-.vc-border {
-    border: none !important;
-}
-
-.vc-container {
-    font-family: Inter, sans-serif !important;
-}
-
-.vc-title {
-    font-family: Quicksand, sans-serif;
-}
-
-.vc-day-box-center-center {
-    @apply p-1;
-}
-
-.vc-rounded-full {
-    height: 2rem !important;
-    width: 2rem !important;
-}
-
-.vc-bg-blue-600 {
-    background: theme('colors.primary') !important;
-    box-shadow: 0 7px 8px -3px rgba(48, 168, 230, 0.5);
 }
 /* purgecss end ignore */
