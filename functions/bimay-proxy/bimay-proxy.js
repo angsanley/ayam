@@ -140,9 +140,13 @@ function processRequest(req, res) {
             delete response.headers["transfer-encoding"];
             delete response.headers["content-encoding"];
 
-            console.log({...response.headers, ...res.headers})
+            console.log({...response.headers, ...res.headers});
+            if (error) {
+                console.log(error);
+            }
 
             res.set({...response.headers, ...res.headers});
+            res.status(response.statusCode);
             res.send(body);
         });
 
