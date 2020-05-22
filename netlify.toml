@@ -1,0 +1,4 @@
+[build]
+  cmmand = "yarn build"
+  publish = "dist/"
+  functions = "functions/"
