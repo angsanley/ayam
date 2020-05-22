@@ -4,7 +4,6 @@ const express = require('express');
 const config = require("./config");
 const url = require("url");
 const request = require("request");
-const cluster = require('cluster');
 const throttle = require("tokenthrottle")({ rate: config.max_requests_per_second });
 const publicAddressFinder = require("public-address");
 

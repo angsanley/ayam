@@ -1,7 +1,7 @@
 {
-  "name": "bimayproxy",
+  "name": "bimay-proxy",
   "version": "1.0.0",
-  "main": "bimayproxy.js",
+  "main": "bimay-proxy.js",
   "license": "MIT",
   "dependencies": {
     "express": "^4.17.1",

@@ -1,6 +1,6 @@
 exports.port = process.env.PORT || 3000;
 exports.enable_logging = false;
-exports.fetch_regex = /^\/proxy\/fetch\/(.*)$/; // The URL to look for when parsing the request.
+exports.fetch_regex = /^\/bimay-proxy\/fetch\/(.*)$/; // The URL to look for when parsing the request.
 exports.proxy_request_timeout_ms = 10000; // The lenght of time we'll wait for a proxy server to respond before timing out.
 exports.max_request_length = 750000; // The maximum length of characters allowed for a request or a response.
 exports.enable_rate_limiting = true;
