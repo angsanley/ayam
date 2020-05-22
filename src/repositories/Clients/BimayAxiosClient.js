@@ -1,7 +1,7 @@
 import axios from "axios";
 import { default as store } from '../../store/index';
 
-const proxyDomain = "https://bimayproxy.herokuapp.com/fetch";
+const proxyDomain = ".netlify/functions/bimayproxy/fetch";
 const baseDomain = "https://binusmaya.binus.ac.id/services/ci/index.php";
 const baseURL = `${proxyDomain}/${baseDomain}`;
 
