@@ -129,48 +129,23 @@
 
                 this.$Progress.finish();
             },
-            getBinusianData() {
-                // https://binusmaya.binus.ac.id/services/ci/index.php/general/getBinusianData
+            async getBinusianData() {
+                const GeneralFactory = Repositories.get("general");
                 this.$Progress.start();
-
-                axios.request({
-                    url: "https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/general/getBinusianData",
-                    method: "get",
-                    headers: {
-                        Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
-                    }
-                })
-                    .then((response) => {
-                        this.binusianData = response.data;
-                        this.$Progress.finish();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$Progress.fail();
-                    });
+                const { data } = await GeneralFactory.getBinusianData();
+                this.binusianData = data;
+                this.$Progress.finish();
             },
-            getCourses() {
-                this.$Progress.start();
-                // https://binusmaya.binus.ac.id/services/ci/index.php/student/init/getCourses
-                axios.request({
-                    url: "https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/student/init/getCourses",
-                    method: "get",
-                    headers: {
-                        Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
-                    }
-                })
-                    .then((response) => {
-                        this.courses = response.data.Courses;
-                        this.$Progress.finish();
+            async getCourses() {
+                const StudentFactory = Repositories.get("student");
 
-                        this.getVideoConferences();
-                        this.getAssignments();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$Progress.fail();
-                    });
+                const { data } = await StudentFactory.getCourses();
+                this.courses = data['Courses'];
+
+                this.getVideoConferences();
+                this.getAssignments();
             },
+            //TODO: change this to proper call
             getVideoConferences() {
                 this.$Progress.start();
                 // https://binusmaya.binus.ac.id/services/ci/index.php/BlendedLearning/VideoConference/getList/ACCT6087/007392/1920/12252
@@ -221,56 +196,42 @@
                 this.$Progress.finish();
             },
             getAssignments() {
-                // https://binusmaya.binus.ac.id/services/ci/index.php/student/classes/assignmentType/COMP6229/011643/1920/LEC/14910/01
-                this.$Progress.start();
-                this.isLoading = true;
-                this.courses.forEach(e => {
-                    const courseId = e.COURSEID;
-                    const crseId = e.CRSE_ID;
-                    const strm = e.STRM;
-                    const classNbr = e.CLASS_NBR;
-                    const ssrComponent = e.SSR_COMPONENT;
+                this.courses.forEach(el => {
+                    const CourseFactory = Repositories.get("course");
+                    const courseId = el.COURSEID;
+                    const crseId = el.CRSE_ID;
+                    const strm = el.STRM;
+                    const classNbr = el.CLASS_NBR;
+                    const ssrComponent = el.SSR_COMPONENT;
 
-                    axios.request({
-                        url: `https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/student/classes/assignmentType/${courseId}/${crseId}/${strm}/${ssrComponent}/${classNbr}/01`,
-                        method: "get",
-                        headers: {
-                            Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
-                        }
-                    })
-                        .then((response) => {
-                            let data = response.data;
+                    CourseFactory.getIndividualAssignments(courseId, crseId, strm, ssrComponent, classNbr).then((response) => {
+                        let data = response.data;
 
-                            data.forEach((e, idx, array) => {
-                                e.classNbr = classNbr;
-                                this.assignments.push(e);
+                        data.forEach((e, idx, array) => {
+                            e.classNbr = classNbr;
+                            this.assignments.push(e);
 
-                                // insert into calendar
-                                const calendarObj = {
-                                    key: `${e.StudentAssignmentID}`,
-                                    dot: 'purple',
-                                    dates: new moment(`${e.deadlineDuration} ${e.deadlineTime}`, "DD MMM YYYY HH:mm:ss").toDate(),
-                                    popover: {
-                                        label: `${e.deadlineTime.substring(0,5)} - Asg. Deadline - ${this.courses.find(e => e.CLASS_NBR === classNbr).COURSENAME}`,
-                                    },
-                                };
+                            // insert into calendar
+                            const calendarObj = {
+                                key: `${e.StudentAssignmentID}`,
+                                dot: 'purple',
+                                dates: new moment(`${e.deadlineDuration} ${e.deadlineTime}`, "DD MMM YYYY HH:mm:ss").toDate(),
+                                popover: {
+                                    label: `${e.deadlineTime.substring(0,5)} - Asg. Deadline - ${this.courses.find(e => e.CLASS_NBR === classNbr).COURSENAME}`,
+                                },
+                            };
 
-                                this.calendarDates.push(calendarObj);
+                            this.calendarDates.push(calendarObj);
 
-                                if (idx === array.length - 1){
-                                    this.$Progress.finish();
-                                    this.isLoading = false;
+                            if (idx === array.length - 1){
+                                this.$Progress.finish();
+                                this.isLoading = false;
 
-                                    // sort
-                                    this.assignments = this.assignments.sort((a,b) => new moment(b.deadlineDuration) - new moment(a.deadlineDuration));
-                                }
-                            })
+                                // sort
+                                this.assignments = this.assignments.sort((a,b) => new moment(b.deadlineDuration) - new moment(a.deadlineDuration));
+                            }
                         })
-                        .catch((error) => {
-                            console.log(error);
-                            this.$Progress.fail();
-                            this.isLoading = false;
-                        });
+                    });
                 });
             },
             async getRandomQuote() {
@@ -283,30 +244,14 @@
                     console.log(error);
                 }
             },
-            getClassSchedules() {
-                // https://binusmaya.binus.ac.id/services/ci/index.php/student/class_schedule/classScheduleGetStudentClassSchedule
-                this.$Progress.start();
-                this.isLoading = true;
+            async getClassSchedules() {
+                const StudentFactory = Repositories.get("student");
 
-                axios.request({
-                    url: "https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/student/class_schedule/classScheduleGetStudentClassSchedule",
-                    method: "get",
-                    headers: {
-                        Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
-                    }
-                })
-                    .then((response) => {
-                        this.classSchedules = response.data;
-                        this.$Progress.finish();
-                        this.isLoading = false;
-                        this.insertDatesToCalendar();
-                        this.getNextClass();
-                    })
-                    .catch((error) => {
-                        console.log(error);
-                        this.$Progress.fail();
-                        this.isLoading = false;
-                    });
+                const { data } = await StudentFactory.getClassSchedules();
+                this.classSchedules = data;
+
+                this.insertDatesToCalendar();
+                this.getNextClass();
             },
             insertDatesToCalendar() {
                 this.$Progress.start();
