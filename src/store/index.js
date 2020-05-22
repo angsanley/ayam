@@ -13,6 +13,7 @@ export default new Vuex.Store({
   state: {
     phpsessid: '',
     isAuthenticated: false,
+    notifications: []
   },
   getters: {
     phpsessid: (state) => {
@@ -20,6 +21,9 @@ export default new Vuex.Store({
     },
     isAuthenticated: (state) => {
       return state.isAuthenticated
+    },
+    getNotifications: (state) => {
+      return state.notifications
     }
   },
   mutations: {
@@ -28,6 +32,9 @@ export default new Vuex.Store({
     },
     SET_ISAUTHENTICATED: (state, newValue) => {
       state.isAuthenticated = newValue
+    },
+    ADD_NOTIFICATIONS: (state, newValue) => {
+      state.notifications.push(newValue)
     },
   },
   actions: {
@@ -38,6 +45,20 @@ export default new Vuex.Store({
     isAuthenticated: ({commit, state}, newValue) => {
       commit('SET_ISAUTHENTICATED', newValue)
       return state.isAuthenticated
+    },
+    addNotifications: ({commit, state}, newValue) => {
+      commit('ADD_NOTIFICATIONS', newValue)
+
+      // show notification
+      Vue.notify({
+        group: 'main',
+        duration: 20000,
+        type: newValue.type,
+        title: newValue.title,
+        text: newValue.text
+      })
+
+      return state.notifications
     },
   },
   modules: {

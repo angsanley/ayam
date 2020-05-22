@@ -9,22 +9,21 @@ import moment from 'moment-timezone';
 import VCalendar from 'v-calendar';
 import PerfectScrollbar from 'vue2-perfect-scrollbar'
 import 'vue2-perfect-scrollbar/dist/vue2-perfect-scrollbar.css'
+import Notifications from 'vue-notification'
 
 moment.tz.setDefault("Asia/Jakarta");
 
 Vue.use(VueTailwind)
-
 Vue.use(VueProgressBar, {
   color: '#0090D1',
   failedColor: 'red',
   height: '2px'
 })
-
 Vue.use(VCalendar, {
   componentPrefix: 'vc'
 });
-
 Vue.use(PerfectScrollbar)
+Vue.use(Notifications)
 
 Vue.config.productionTip = false
 

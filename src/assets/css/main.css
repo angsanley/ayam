@@ -81,6 +81,34 @@ a {
     @apply rounded-lg overflow-hidden shadow-md bg-white;
 }
 
+.notification-box {
+    @apply px-4 py-2 shadow-lg bg-blue-500 m-2 rounded-lg;
+}
+
+.notification-box.error {
+    @apply bg-red-500 text-white;
+    box-shadow: 0 10px 10px -3px rgba(245, 101, 101, 0.4);
+}
+
+.notification-box.warn {
+    @apply bg-orange-500 text-white;
+    box-shadow: 0 10px 10px -3px rgba(237, 137, 54, 0.4);
+}
+
+.notification-box.success {
+    @apply bg-green-600 text-white;
+    box-shadow: 0 10px 10px -3px rgba(56, 161, 105, 0.4);
+}
+
+.notification-box .notification-title {
+    @apply font-bold mb-1;
+    font-family: Quicksand, sans-serif;
+}
+
+.notification-box .notification-content {
+    @apply text-sm;
+}
+
 /*Dirty hacks for VC Calender*/
 /* purgecss start ignore */
 .vc-border {
