@@ -4,45 +4,45 @@ const resource = '/sat';
 
 export default {
     getStudentActivityPoints() {
-        return Client.get(`${resource}/studentactivitytranscript/GetStudentActivityPoint`);
+        return Client().get(`${resource}/studentactivitytranscript/GetStudentActivityPoint`);
     },
     getCommunityServicesHours() {
-        return Client.get(`${resource}/studentactivitytranscript/GetCommunityServices`);
+        return Client().get(`${resource}/studentactivitytranscript/GetCommunityServices`);
     },
     getDevelopmentDetailPending() {
-        return Client.get(`${resource}/development/getDevelopmentDetailPending`);
+        return Client().get(`${resource}/development/getDevelopmentDetailPending`);
     },
     getDevelopmentDetail() {
-        return Client.get(`${resource}/development/getDevelopmentDetail`);
+        return Client().get(`${resource}/development/getDevelopmentDetail`);
     },
     getOrganizationExperiencePending() {
-        return Client.get(`${resource}/development/getOrganizationExperiencePending`);
+        return Client().get(`${resource}/development/getOrganizationExperiencePending`);
     },
     getOrganizationExperience() {
-        return Client.get(`${resource}/development/getOrganizationExperience`);
+        return Client().get(`${resource}/development/getOrganizationExperience`);
     },
     getWorkingExperiencePending() {
-        return Client.get(`${resource}/development/getWorkingExperiencePending`);
+        return Client().get(`${resource}/development/getWorkingExperiencePending`);
     },
     getWorkingExperience() {
-        return Client.get(`${resource}/development/getWorkingExperience`);
+        return Client().get(`${resource}/development/getWorkingExperience`);
     },
 
     // for edit and new development program
     getDevelopmentTypes() {
-        return Client.get(`${resource}/development/getDevelopmentType`);
+        return Client().get(`${resource}/development/getDevelopmentType`);
     },
     getDevelopmentLevels() {
-        return Client.get(`${resource}/development/getDevelopmentLevel`);
+        return Client().get(`${resource}/development/getDevelopmentLevel`);
     },
     getDevelopmentPositions() {
-        return Client.get(`${resource}/development/getDevelopmentPosition`);
+        return Client().get(`${resource}/development/getDevelopmentPosition`);
     },
     getDevelopmentCategories() {
-        return Client.get(`${resource}/development/getDevelopmentCategory`);
+        return Client().get(`${resource}/development/getDevelopmentCategory`);
     },
     getDevelopmentDetailByID(developmentDetailID) {
-        return Client.post(`${resource}/development/getDevelopmentDetailByID`, {DevelopmentDetailID: developmentDetailID});
+        return Client().post(`${resource}/development/getDevelopmentDetailByID`, {DevelopmentDetailID: developmentDetailID});
     },
     addDevelopmentDetail(file, developmentType, developmentLevel, developmentPosition, developmentCategory, title, place, dateFrom, dateUntil, organizerName, address, email, contactNumber, claimSat) {
         let formData = new FormData();
@@ -65,7 +65,7 @@ export default {
         formData.append("IsSAT", (claimSat ? "1" : "0"));
         formData.append("filename", null); //TODO: change this
 
-        return Client.post(`/student/portfolio_development/addDevelopmentDetail`, formData, {
+        return Client().post(`/student/portfolio_development/addDevelopmentDetail`, formData, {
             headers: {
                 'Content-Type': 'multipart/form-data' //TODO: no cookie
             }

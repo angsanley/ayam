@@ -5,9 +5,11 @@ const baseURL = `${baseDomain}`; // Incase of /api/v1;
 
 // ALL DEFUALT CONFIGURATION HERE
 
-export default axios.create({
-    baseURL,
-    headers: {
-        // "Authorization": "Bearer xxxxx"
-    }
-});
+export default () => {
+    return axios.create({
+        baseURL,
+        headers: {
+            // "Authorization": "Bearer xxxxx"
+        }
+    });
+}

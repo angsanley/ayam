@@ -4,6 +4,6 @@ const resource = '/quotes';
 
 export default {
     get() {
-        return Client.get(`${resource}`);
+        return Client().get(`${resource}`);
     }
 };
