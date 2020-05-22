@@ -47,8 +47,8 @@ function writeResponse(res, httpCode, body) {
     res.end(body);
 }
 
-function sendInvalidURLResponse(res) {
-    return writeResponse(res, 404, "url must be in the form of /fetch/{some_url_here}");
+function sendInvalidURLResponse(res, currentUrl) {
+    return writeResponse(res, 404, `${currentUrl}: url must be in the form of /fetch/{some_url_here}`);
 }
 
 function sendTooBigResponse(res) {
@@ -77,7 +77,7 @@ function processRequest(req, res) {
             remoteURL = url.parse(decodeURI(result[1]));
         }
         catch (e) {
-            return sendInvalidURLResponse(res);
+            return sendInvalidURLResponse(res, req.url);
         }
 
         // We don't support relative links
@@ -188,7 +188,7 @@ function processRequest(req, res) {
         // });
     }
     else {
-        return sendInvalidURLResponse(res);
+        return sendInvalidURLResponse(res, req.url);
     }
 }
 
