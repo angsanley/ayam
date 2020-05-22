@@ -16,6 +16,10 @@ module.exports = {
           xl: '5rem',
         },
       },
+      fontFamily: {
+        'title': ['Quicksand'],
+        'body': ['Inter']
+      }
     },
   },
   variants: {},

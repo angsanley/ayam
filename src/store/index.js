@@ -2,6 +2,8 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 import VuexPersist from 'vuex-persist'
 
+import Repositories from "../repositories/RepositoryFactory";
+
 Vue.use(Vuex)
 
 const vuexPersist = new VuexPersist({
@@ -13,7 +15,8 @@ export default new Vuex.Store({
   state: {
     phpsessid: '',
     isAuthenticated: false,
-    notifications: []
+    notifications: [],
+    dashboardData: ''
   },
   getters: {
     phpsessid: (state) => {
@@ -24,6 +27,9 @@ export default new Vuex.Store({
     },
     getNotifications: (state) => {
       return state.notifications
+    },
+    getDashboardData: (state) => {
+      return state.dashboardData
     }
   },
   mutations: {
@@ -35,6 +41,9 @@ export default new Vuex.Store({
     },
     ADD_NOTIFICATIONS: (state, newValue) => {
       state.notifications.push(newValue)
+    },
+    SET_DASHBOARD_DATA: (state, newValue) => {
+      state.dashboardData = newValue
     },
   },
   actions: {
@@ -59,6 +68,11 @@ export default new Vuex.Store({
       })
 
       return state.notifications
+    },
+    fetchDashboardData: async ({commit}) => {
+      const StudentRepository = Repositories.get("student");
+      const response = await StudentRepository.getProfile();
+      commit('SET_DASHBOARD_DATA', response.data);
     },
   },
   modules: {

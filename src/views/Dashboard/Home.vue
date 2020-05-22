@@ -89,7 +89,7 @@
                     {
                         key: 'today',
                         highlight: true,
-                        dates: new moment().toDate()
+                        dates: moment().toDate()
                     }
                 ],
                 nextClass: ""
@@ -143,7 +143,6 @@
                 this.getVideoConferences();
                 this.getAssignments();
             },
-            //TODO: change this to proper call
             getVideoConferences() {
                 const VideoConferenceRepository = Repositories.get("videoConference");
                 this.courses.forEach(e => {
@@ -164,6 +163,7 @@
 
                             this.videoConferences.push(e);
 
+                            //TODO: this is wrong
                             // sort
                             this.videoConferences = this.videoConferences.sort((a,b) => new moment(b.startDate) - new moment(a.startDate));
                         });
@@ -301,6 +301,7 @@
             }
         },
         mounted() {
+            this.$store.dispatch('fetchDashboardData');
             this.checkSession();
             this.getBinusianData();
             this.getCourses();
