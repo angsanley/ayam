@@ -8,6 +8,7 @@ import GeneralRepository from "./BimayRepository/GeneralRepository";
 import NotificationRepository from "./BimayRepository/NotificationRepository";
 import SatPointsRepository from "./BimayRepository/SatPointsRepository";
 import StudentRepository from "./BimayRepository/StudentRepository";
+import VideoConferenceRepository from "./BimayRepository/VideoConferenceRepository";
 
 const repositories = {
     'attendance': AttendanceRepository,
@@ -20,6 +21,7 @@ const repositories = {
     'satPoints': SatPointsRepository,
     'session': SessionRepository,
     'student': StudentRepository,
+    'videoConference': VideoConferenceRepository,
 }
 export default {
     get: name => repositories[name]

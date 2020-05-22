@@ -7,7 +7,7 @@ const proxyDomain = (process.env.NODE_ENV === 'development') ? "https://bimaypro
 const baseDomain = "https://binusmaya.binus.ac.id/services/ci/index.php";
 const baseURL = `${proxyDomain}/${baseDomain}`;
 
-export default () => {
+export default (interceptor) => {
     const axios = _axios.create({
         baseURL,
         headers: bimayAuthHeader()
@@ -26,11 +26,14 @@ export default () => {
         retryCondition: axiosRetry.isRetryableError,
     });
 
-    axios.interceptors.response.use(function(response) {
+    axios.interceptors.response.use((response) => {
+        if (interceptor) return interceptor(response.data);
         return response;
-    }, function(error) {
+
+    }, (error) => {
         store.dispatch("addNotifications", { title: "Failed to fetch data", text: `It looks like BINUSMaya server is acting up again. Please check back later. ${error}`, type: 'error' });
         return Promise.reject(error);
+
     });
 
     return axios;

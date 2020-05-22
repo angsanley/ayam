@@ -66,8 +66,6 @@
     // GET https://binusmaya.binus.ac.id/services/ci/index.php/student/init/getCourses
     // GET https://binusmaya.binus.ac.id/services/ci/index.php/student/classes/assignmentType/COMP6229/011643/1920/LEC/14910/01
 
-    import axios from "axios";
-    import * as HtmlTableToJson from "html-table-to-json";
     import moment from "moment-timezone";
     import Assignments from "../../components/Assignments";
     import { VueContentLoading } from 'vue-content-loading';
@@ -147,53 +145,30 @@
             },
             //TODO: change this to proper call
             getVideoConferences() {
-                this.$Progress.start();
-                // https://binusmaya.binus.ac.id/services/ci/index.php/BlendedLearning/VideoConference/getList/ACCT6087/007392/1920/12252
+                const VideoConferenceRepository = Repositories.get("videoConference");
                 this.courses.forEach(e => {
                     const courseId = e.COURSEID;
                     const crseId = e.CRSE_ID;
                     const strm = e.STRM;
                     const classNbr = e.CLASS_NBR;
 
-                    axios.request({
-                        url: `https://bimayproxy.herokuapp.com/fetch/https://binusmaya.binus.ac.id/services/ci/index.php/BlendedLearning/VideoConference/getList/${courseId}/${crseId}/${strm}/${classNbr}`,
-                        method: "get",
-                        headers: {
-                            Bisquit: `PHPSESSID=${this.$store.state.phpsessid}`
-                        }
-                    })
-                        .then((response) => {
-                            let data = response.data;
+                    VideoConferenceRepository.getList(courseId, crseId, strm, classNbr).then(el => {
+                        // returns array, iterate every items
+                        el.forEach(e => {
+                            e.classNbr = classNbr;
 
-                            // remove stupid tag
-                            data = data.replace(/<span.+vc="/g, "");
-                            data = data.replace(/">.+>/g, "");
+                            //split time
+                            const time = e.Time.split(' - ');
+                            e.startDate = `${e.Date} ${time[0]}`;
+                            e.endDate = `${e.Date} ${time[1]}`;
 
-                            // convert html into json (stupid IT div.. huh!)
-                            const classes = HtmlTableToJson.parse(`<table>${data}</table>`).results[0];
+                            this.videoConferences.push(e);
 
-                            classes.forEach(e => {
-                                e.classNbr = classNbr;
-
-                                //split time
-                                const time = e.Time.split(' - ');
-                                e.startDate = `${e.Date} ${time[0]}`;
-                                e.endDate = `${e.Date} ${time[1]}`;
-
-                                this.videoConferences.push(e);
-
-                                // sort
-                                this.videoConferences = this.videoConferences.sort((a,b) => new moment(b.startDate) - new moment(a.startDate));
-                            });
-
-                            this.$Progress.finish();
-                        })
-                        .catch((error) => {
-                            console.log(error);
-                            this.$Progress.fail();
+                            // sort
+                            this.videoConferences = this.videoConferences.sort((a,b) => new moment(b.startDate) - new moment(a.startDate));
                         });
+                    })
                 });
-                this.$Progress.finish();
             },
             getAssignments() {
                 this.courses.forEach(el => {
