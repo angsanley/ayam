@@ -1,7 +1,7 @@
 <template>
     <div>
         <div class="flex flex-row justify-between items-center">
-            <h3 class="mb-2">Assignments</h3>
+            <h3 class="mb-2">Upcoming Assignments</h3>
             <router-link class="transform hover:scale-105 hover:bg-white hover:shadow-lg transition ease-out duration-300 py-1 px-2 rounded-lg uppercase text-sm font-bold text-blue-600 no-underline" to="/dashboard/assignments">Show all</router-link>
         </div>
         <perfect-scrollbar :options="{handlers: ['wheel', 'touch']}" class="items" v-dragscroll="window.width >= 1024">

@@ -32,6 +32,7 @@ Vue.use(VueRouter)
       { path: '/', name: 'Dashboard', component: () => import('../views/Dashboard/Home.vue') },
       { path: 'courses', name: 'Courses', component: () => import('../views/Dashboard/Courses.vue') },
       { path: 'assignments', name: 'Assignments', component: () => import('../views/Dashboard/Assignments.vue') },
+      { path: 'videoconferences', name: 'VideoConferences', component: () => import('../views/Dashboard/VideoConferences.vue') },
     ]
   }
 ]

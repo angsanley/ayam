@@ -1,6 +1,9 @@
 <template>
     <div>
-        <h3 class="mb-2">Video Conferences</h3>
+        <div class="flex flex-row justify-between items-center">
+            <h3 class="mb-2">Upcoming Video Conferences</h3>
+            <router-link class="transform hover:scale-105 hover:bg-white hover:shadow-lg transition ease-out duration-300 py-1 px-2 rounded-lg uppercase text-sm font-bold text-blue-600 no-underline" to="/dashboard/videoconferences">Show all</router-link>
+        </div>
         <perfect-scrollbar :options="{handlers: ['wheel', 'touch']}" class="items" v-dragscroll="window.width >= 1024">
             <div class="card assignment-card flex flex-shrink-0" v-for="videoConference in this.videoConferences" :key="videoConference.Title">
                 <div class="flex flex-col h-full justify-between">

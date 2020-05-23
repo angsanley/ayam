@@ -170,6 +170,12 @@
                     console.log(error);
                 }
             },
+            parseAssignmentDeadline(object) {
+                return moment(`${object['deadlineDuration']} ${object['deadlineTime']}`, "DD MMM YYYY HH:mm:ss");
+            },
+            parseVideoSchedule(object) {
+                return moment(object.startDate, "MMM DD, YYYY HH:mm:ss");
+            }
         },
         computed: {
             greetings() {
@@ -205,12 +211,12 @@
             filteredAssignments() {
                 return this.assignments.filter((assignment) => {
                     return moment(`${assignment['deadlineDuration']} ${assignment['deadlineTime']}`, "DD MMM YYYY HH:mm:ss").isAfter();
-                });
+                }).sort((a,b) => this.parseAssignmentDeadline(a) - this.parseAssignmentDeadline(b));
             },
             filteredVideoSchedules() {
                 return this.videoConferences.filter((schedule) => {
-                    return moment(schedule.startDate, "MMM DD, YYYY HH:mm:ss").isAfter(moment().add(30, 'minutes'));
-                });
+                    return this.parseVideoSchedule(schedule).isAfter(moment().add(30, 'minutes'));
+                }).sort((a,b) => this.parseVideoSchedule(a) - this.parseVideoSchedule(b));
             }
         },
         watch: {
@@ -241,6 +247,11 @@
             this.$store.dispatch('fetchClassSchedules');
             this.$store.dispatch('fetchAssignments');
             this.$store.dispatch('fetchVideoConferences');
+
+            if (this.classSchedules && this.classSchedules.length > 0) {
+                this.getNextClass();
+                this.insertDatesToCalendar();
+            }
         }
     }
 </script>
