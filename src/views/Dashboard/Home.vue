@@ -225,6 +225,9 @@
             classSchedules() {
                 this.insertDatesToCalendar();
                 this.getNextClass();
+            },
+            assignments() {
+                this.insertDatesToCalendar();
             }
         },
         filters: {
