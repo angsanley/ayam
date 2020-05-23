@@ -9,9 +9,48 @@
 
 <script>
     import TheNav from "../components/Dashboard/TheNav";
+    import Repositories from "../repositories/RepositoryFactory";
     export default {
         name: "Dashboard",
-        components: {TheNav}
+        components: {TheNav},
+        methods: {
+            async checkSession() {
+                const SessionFactory = Repositories.get("session");
+
+                this.$Progress.start();
+
+                if (!this.$store.getters.isAuthenticated || this.$store.state.phpsessid === '') {
+                    this.$store.dispatch('addNotifications', { title: '⚠️ Oops!', text: 'You are not logged in, please login first. 😏', type: 'warn' })
+
+                    // redirect to login
+                    await this.$store.dispatch('isAuthenticated', false);
+                    await this.$router.push('/login');
+                }
+
+                try {
+                    const { data } = await SessionFactory.check();
+
+                    if (data.RoleID === 0) {
+                        // redirect to login
+                        await this.$store.dispatch('isAuthenticated', false);
+                        await this.$router.push('/login');
+                    }
+                } catch (error) {
+                    this.$Progress.fail();
+                    if (error.response) {
+                        if (error.response.status === 404) {
+                            // maybe in maintenance mode
+                            await this.$router.push('/maintenance');
+                        }
+                    }
+                }
+
+                this.$Progress.finish();
+            },
+        },
+        mounted() {
+            this.checkSession();
+        }
     }
 </script>
 

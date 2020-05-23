@@ -70,37 +70,6 @@
             }
         },
         methods: {
-            async checkSession() {
-                const SessionFactory = Repositories.get("session");
-
-                this.$Progress.start();
-
-                if (!this.$store.getters.isAuthenticated || this.$store.state.phpsessid === '') {
-                    // redirect to login
-                    await this.$store.dispatch('isAuthenticated', false);
-                    await this.$router.push('/login');
-                }
-
-                try {
-                    const { data } = await SessionFactory.check();
-
-                    if (data.RoleID === 0) {
-                        // redirect to login
-                        await this.$store.dispatch('isAuthenticated', false);
-                        await this.$router.push('/login');
-                    }
-                } catch (error) {
-                    this.$Progress.fail();
-                    if (error.response) {
-                        if (error.response.status === 404) {
-                            // maybe in maintenance mode
-                            await this.$router.push('/maintenance');
-                        }
-                    }
-                }
-
-                this.$Progress.finish();
-            },
             insertDatesToCalendar() {
                 // input class schedules
                 if (this.classSchedules && this.classSchedules.length > 0) this.classSchedules.forEach(e => {
@@ -240,7 +209,6 @@
             },
         },
         mounted() {
-            this.checkSession();
             this.getRandomQuote();
             this.$store.dispatch('fetchDashboardData');
             this.$store.dispatch('fetchCourses');
