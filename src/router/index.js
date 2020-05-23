@@ -1,6 +1,5 @@
 import Vue from 'vue'
 import VueRouter from 'vue-router'
-import DashboardHome from '../views/Dashboard/Home.vue'
 import Home from '../views/Home.vue'
 
 Vue.use(VueRouter)
@@ -30,7 +29,8 @@ Vue.use(VueRouter)
     path: '/dashboard',
     component: () => import('../views/Dashboard.vue'),
     children: [
-      { path: '/', name: 'Dashboard', component: DashboardHome },
+      { path: '/', name: 'Dashboard', component: () => import('../views/Dashboard/Home.vue') },
+      { path: 'courses', name: 'Courses', component: () => import('../views/About.vue') },
     ]
   }
 ]

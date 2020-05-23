@@ -81,7 +81,7 @@
         },
         created() {
             // reset
-            this.$store.dispatch('isAuthenticated', false);
+            this.$store.dispatch('clearAll');
         }
     }
 </script>

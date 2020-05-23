@@ -6,7 +6,7 @@
                 <div class="card w-full p-6 mb-12">
                     <div class="flex flex-col-reverse sm:flex-row justify-between">
                         <div class="flex flex-col justify-center w-full md:w-8/12">
-                            <h3>{{greetings}}, <span class="capitalize">{{ binusianData.FIRST_NAME | lowerCase }}</span>!</h3>
+                            <h3>{{greetings}}, <span class="capitalize">{{userNameShort}}</span>!</h3>
                             <p class="pt-2">{{randomQuote}}</p>
                             <div v-if="nextClass !== -1 && nextClass">
                                 <h4 class="mt-4">Your next class starting {{ nextClass.startDate | relativeTime }}.</h4>
@@ -60,29 +60,18 @@
 </style>
 
 <script>
-    // @ is an alias to /src
-    // GET https://binusmaya.binus.ac.id/services/ci/index.php/staff/init/check_session
-    // GET https://binusmaya.binus.ac.id/services/ci/index.php/general/getBinusianData
-    // GET https://binusmaya.binus.ac.id/services/ci/index.php/student/init/getCourses
-    // GET https://binusmaya.binus.ac.id/services/ci/index.php/student/classes/assignmentType/COMP6229/011643/1920/LEC/14910/01
-
     import moment from "moment-timezone";
     import Assignments from "../../components/Assignments";
-    import { VueContentLoading } from 'vue-content-loading';
     import VideoConferences from "../../components/VideoConferences";
     import YourSchedule from "../../components/YourSchedule";
     import Repositories from "../../repositories/RepositoryFactory";
+    import { VueContentLoading } from 'vue-content-loading';
 
     export default {
         name: 'Home',
         components: {YourSchedule, VideoConferences, Assignments, VueContentLoading},
         data() {
             return {
-                binusianData: {},
-                courses: [],
-                videoConferences: [],
-                classSchedules: [],
-                assignments: [],
                 isLoading: false,
                 randomQuote: "",
                 calendarDates: [
@@ -127,113 +116,7 @@
 
                 this.$Progress.finish();
             },
-            async getBinusianData() {
-                const GeneralFactory = Repositories.get("general");
-                this.$Progress.start();
-                const { data } = await GeneralFactory.getBinusianData();
-                this.binusianData = data;
-                this.$Progress.finish();
-            },
-            async getCourses() {
-                const StudentFactory = Repositories.get("student");
-
-                const { data } = await StudentFactory.getCourses();
-                this.courses = data['Courses'];
-
-                this.getVideoConferences();
-                this.getAssignments();
-            },
-            getVideoConferences() {
-                const VideoConferenceRepository = Repositories.get("videoConference");
-                this.courses.forEach(e => {
-                    const courseId = e.COURSEID;
-                    const crseId = e.CRSE_ID;
-                    const strm = e.STRM;
-                    const classNbr = e.CLASS_NBR;
-
-                    VideoConferenceRepository.getList(courseId, crseId, strm, classNbr).then(el => {
-                        // returns array, iterate every items
-                        el.forEach(e => {
-                            e.classNbr = classNbr;
-
-                            //split time
-                            const time = e.Time.split(' - ');
-                            e.startDate = `${e.Date} ${time[0]}`;
-                            e.endDate = `${e.Date} ${time[1]}`;
-
-                            this.videoConferences.push(e);
-
-                            //TODO: this is wrong
-                            // sort
-                            this.videoConferences = this.videoConferences.sort((a,b) => new moment(b.startDate) - new moment(a.startDate));
-                        });
-                    })
-                });
-            },
-            getAssignments() {
-                this.courses.forEach(el => {
-                    const CourseFactory = Repositories.get("course");
-                    const courseId = el.COURSEID;
-                    const crseId = el.CRSE_ID;
-                    const strm = el.STRM;
-                    const classNbr = el.CLASS_NBR;
-                    const ssrComponent = el.SSR_COMPONENT;
-
-                    CourseFactory.getIndividualAssignments(courseId, crseId, strm, ssrComponent, classNbr).then((response) => {
-                        let data = response.data;
-
-                        data.forEach((e, idx, array) => {
-                            e.classNbr = classNbr;
-                            this.assignments.push(e);
-
-                            // insert into calendar
-                            const calendarObj = {
-                                key: `${e.StudentAssignmentID}`,
-                                dot: 'purple',
-                                dates: new moment(`${e.deadlineDuration} ${e.deadlineTime}`, "DD MMM YYYY HH:mm:ss").toDate(),
-                                popover: {
-                                    label: `${e.deadlineTime.substring(0,5)} - Asg. Deadline - ${this.courses.find(e => e.CLASS_NBR === classNbr).COURSENAME}`,
-                                },
-                            };
-
-                            this.calendarDates.push(calendarObj);
-
-                            if (idx === array.length - 1){
-                                this.$Progress.finish();
-                                this.isLoading = false;
-
-                                // sort
-                                this.assignments = this.assignments.sort((a,b) => new moment(b.deadlineDuration) - new moment(a.deadlineDuration));
-                            }
-                        })
-                    });
-                });
-            },
-            async getRandomQuote() {
-                const DailyQuoteRepository = Repositories.get("dailyQuotes");
-                try {
-                    const { data } = await DailyQuoteRepository.get();
-                    const quote = data[Math.floor(Math.random() * data.length)];
-                    this.randomQuote = `${quote.text} - ${quote.author}`;
-                } catch (error) {
-                    console.log(error);
-                }
-            },
-            async getClassSchedules() {
-                const StudentFactory = Repositories.get("student");
-
-                const { data } = await StudentFactory.getClassSchedules();
-                this.classSchedules = data;
-
-                this.insertDatesToCalendar();
-                this.getNextClass();
-            },
             insertDatesToCalendar() {
-                this.$Progress.start();
-                this.isLoading = true;
-
-                // console.log(this.classSchedules.filter(c => {return c.ROOM === 400}))
-
                 // input class schedules
                 this.classSchedules.forEach(e => {
                     let dot = true;
@@ -259,6 +142,20 @@
 
                     this.calendarDates.push(calendarObj);
                 });
+
+                // input assignment schedules
+                this.assignments.forEach(e => {
+                    const calendarObj = {
+                        key: `${e.StudentAssignmentID}`,
+                        dot: 'purple',
+                        dates: new moment(`${e.deadlineDuration} ${e.deadlineTime}`, "DD MMM YYYY HH:mm:ss").toDate(),
+                        popover: {
+                            label: `${e.deadlineTime.substring(0,5)} - Asg. Deadline - ${this.courses.find(el => el.CLASS_NBR === e.classNbr).COURSENAME}`,
+                        },
+                    };
+
+                    this.calendarDates.push(calendarObj);
+                })
             },
             getNextClass() {
                 let nextClasses = this.classSchedules.filter(c => {
@@ -276,9 +173,19 @@
                     this.nextClass = -1;
                 }
             },
+            async getRandomQuote() {
+                const DailyQuoteRepository = Repositories.get("dailyQuotes");
+                try {
+                    const { data } = await DailyQuoteRepository.get();
+                    const quote = data[Math.floor(Math.random() * data.length)];
+                    this.randomQuote = `${quote.text} — ${quote.author}`;
+                } catch (error) {
+                    console.log(error);
+                }
+            },
         },
         computed: {
-            greetings: function() {
+            greetings() {
                 const today = new Date()
                 const curHr = today.getHours()
 
@@ -289,6 +196,35 @@
                 } else {
                     return "Good evening"
                 }
+            },
+            courses() {
+                return this.$store.getters.getCourses;
+            },
+            dashboardData() {
+                return this.$store.getters.getDashboardData;
+            },
+            assignments() {
+                return this.$store.getters.getAssignments;
+            },
+            videoConferences() {
+                return this.$store.getters.getVideoConferences;
+            },
+            classSchedules() {
+                return this.$store.getters.getClassSchedules;
+            },
+            userNameShort() {
+                return this.dashboardData ? this.dashboardData['Student']['Name'].split(' ')[0].toLowerCase() : '';
+            }
+        },
+        watch: {
+            courses() {
+                this.$store.dispatch('fetchClassSchedules');
+                this.$store.dispatch('fetchVideoConferences');
+                this.$store.dispatch('fetchAssignments');
+            },
+            classSchedules() {
+                this.insertDatesToCalendar();
+                this.getNextClass();
             }
         },
         filters: {
@@ -296,17 +232,15 @@
                 // console.log(date + " " + moment(date, "DD MMM YYYY HH:mm:ss").fromNow())
                 return moment(date, format).fromNow();
             },
-            lowerCase: function (string) {
-                return string ? string.toLowerCase() : string;
-            }
         },
         mounted() {
-            this.$store.dispatch('fetchDashboardData');
             this.checkSession();
-            this.getBinusianData();
-            this.getCourses();
+            this.$store.dispatch('fetchDashboardData');
+            this.$store.dispatch('fetchCourses');
+            this.$store.dispatch('fetchClassSchedules');
+            this.$store.dispatch('fetchVideoConferences');
+            this.$store.dispatch('fetchAssignments');
             this.getRandomQuote();
-            this.getClassSchedules();
         }
     }
 </script>
