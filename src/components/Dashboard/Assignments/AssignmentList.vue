@@ -13,7 +13,7 @@
                         <div>{{ parseAssignmentDeadline(assignment).format('dddd, D MMM YYYY HH:mm') }}</div>
                     </div>
                     <div class="ml-4">
-                        <a :href="getDownloadLink(assignment)" class="bg-primary hover:bg-blue-500 shadow-primary no-underline text-white font-bold rounded-lg p-2 md:text-sm"><i class="fas fa-download"/><span class="hidden md:inline"> Download</span></a>
+                        <a :href="getDownloadLink(assignment)" class="bg-primary hover:bg-blue-500 shadow-primary no-underline text-white font-bold rounded-lg md:rounded-full py-2 px-3 md:px-4 md:text-sm"><i class="fas fa-download"/><span class="hidden md:inline"> Download</span></a>
                     </div>
                 </div>
             </div>
