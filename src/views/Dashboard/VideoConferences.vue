@@ -2,7 +2,7 @@
     <div class="lg:h-screen pt-16 flex flex-col flex-wrap items-center">
         <div class="w-full container mt-4">
             <div class="flex flex-col justify-between">
-                <div class="mb-4 text-xl"><a @click="$router.go(-1)" href="#" class="no-underline text-gray-700"><i class="fas fa-arrow-left"/></a></div>
+                <div class="mb-4 text-xl"><a @click="$router.go(-1)" href="#" class="no-underline text-gray-700 dark-mode:text-gray-100"><i class="fas fa-arrow-left"/></a></div>
                 <div class="flex flex-col mb-8" v-if="upcomingVideoConferences.length > 0">
                     <h3 class="mb-4">Upcoming Meetings</h3>
                     <video-conference-list :video-conferences="upcomingVideoConferences" :courses="courses"/>

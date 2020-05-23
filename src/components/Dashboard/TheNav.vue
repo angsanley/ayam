@@ -40,7 +40,7 @@
                         <div class="font-title font-bold text-lg mt-2 capitalize dark-mode:text-gray-300">{{ studentProfile.name }}</div>
                         <div class="text-sm mt-2 dark-mode:text-gray-400">{{ studentProfile.email }}</div>
                         <div class="text-sm text-gray-600 dark-mode:text-gray-400">{{ studentProfile.major }}</div>
-                        <a href="#" @click.prevent="logout" class="border-2 rounded-full w-full py-1 mt-4 text-center text-gray-700 dark-mode:text-gray-400 no-underline hover:bg-gray-100 dark-mode:hover:bg-gray-900 focus:outline-none">Logout</a>
+                        <a href="#" @click.prevent="logout" class="border-2 rounded-full w-full py-1 mt-4 text-center text-gray-700 dark-mode:text-gray-400 no-underline hover:bg-gray-100 dark-mode:hover:bg-gray-800 focus:outline-none">Logout</a>
                     </div>
                 </div>
             </transition>
@@ -195,7 +195,7 @@
         }
 
         .user-card {
-            @apply bg-gray-800 rounded-lg shadow-xl fixed px-4 py-6 mt-16 mr-6 top-0 right-0;
+            @apply bg-gray-900 rounded-lg shadow-xl fixed px-4 py-6 mt-16 mr-6 top-0 right-0;
         }
     }
 </style>
