@@ -33,7 +33,7 @@
                         <div class="font-title font-bold text-lg mt-2 capitalize">{{dashboardData['Student']['Name'].toLowerCase()}}</div>
                         <div class="text-sm mt-2">{{dashboardData['Student']['Email']}}</div>
                         <div class="text-sm text-gray-600">{{dashboardData['Student']['Major']}}</div>
-                        <router-link to="/login" class="border-2 rounded-full w-full py-1 mt-4 text-center text-gray-700 no-underline hover:bg-gray-100 focus:outline-none">Logout</router-link>
+                        <a href="#" @click.prevent="logout" class="border-2 rounded-full w-full py-1 mt-4 text-center text-gray-700 no-underline hover:bg-gray-100 focus:outline-none">Logout</a>
                     </div>
                 </div>
             </transition>
@@ -67,6 +67,10 @@
             },
             closeUserCard() {
                 this.showUserCard = false;
+            },
+            logout() {
+                this.$store.dispatch('clearAll');
+                this.$router.push('/login');
             },
             async getPhoto() {
                 const GeneralRepository = RepositoryFactory.get('general');

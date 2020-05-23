@@ -80,8 +80,6 @@
             }
         },
         created() {
-            // reset
-            this.$store.dispatch('clearAll');
         }
     }
 </script>
