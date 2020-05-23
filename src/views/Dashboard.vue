@@ -32,6 +32,7 @@
 
                     if (data.RoleID === 0) {
                         // redirect to login
+                        this.$store.dispatch('addNotifications', { title: '⚠️ Oops!', text: 'Session expired. Please login again. 😬', type: 'warn' })
                         await this.$store.dispatch('isAuthenticated', false);
                         await this.$router.push('/login');
                     }
