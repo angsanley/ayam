@@ -25,8 +25,8 @@
         <div class="navbar" v-click-outside="closeUserCard">
 
 <!--         search bar-->
-            <div class="relative text-gray-600 lg:ml-24">
-                <input type="search" name="search" placeholder="Search" class="bg-gray-300 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
+            <div class="relative text-gray-600 dark-mode:text-gray-400 lg:ml-24">
+                <input type="search" name="search" placeholder="Search" class="bg-gray-300 placeholder-gray-600 dark-mode:placeholder-gray-400 dark-mode:bg-gray-800 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
                 <button type="submit" class="absolute right-0 top-0 mt-2 mr-4">
                     <i class="fas fa-search"></i>
                 </button>
@@ -37,10 +37,10 @@
                 <div class="user-card" v-if="showUserCard">
                     <div class="flex flex-col items-center">
                         <img class="account-pic h-24 w-24" :src="profilePicture" alt="profile picture"/>
-                        <div class="font-title font-bold text-lg mt-2 capitalize">{{ studentProfile.name }}</div>
-                        <div class="text-sm mt-2">{{ studentProfile.email }}</div>
-                        <div class="text-sm text-gray-600">{{ studentProfile.major }}</div>
-                        <a href="#" @click.prevent="logout" class="border-2 rounded-full w-full py-1 mt-4 text-center text-gray-700 no-underline hover:bg-gray-100 focus:outline-none">Logout</a>
+                        <div class="font-title font-bold text-lg mt-2 capitalize dark-mode:text-gray-300">{{ studentProfile.name }}</div>
+                        <div class="text-sm mt-2 dark-mode:text-gray-400">{{ studentProfile.email }}</div>
+                        <div class="text-sm text-gray-600 dark-mode:text-gray-400">{{ studentProfile.major }}</div>
+                        <a href="#" @click.prevent="logout" class="border-2 rounded-full w-full py-1 mt-4 text-center text-gray-700 dark-mode:text-gray-400 no-underline hover:bg-gray-100 dark-mode:hover:bg-gray-900 focus:outline-none">Logout</a>
                     </div>
                 </div>
             </transition>
@@ -135,7 +135,7 @@
     }
 
     .link-active {
-        @apply text-primary;
+        @apply text-primaryDark;
     }
 
     .nav {
@@ -167,7 +167,7 @@
         }
 
         .sidenavbar {
-            @apply px-0 float-left bg-gray-100 shadow-none text-gray-800;
+            @apply px-0 float-left shadow-none text-gray-800 bg-gray-100;
             width: 6rem;
             min-height: 100vh;
         }
@@ -181,7 +181,21 @@
         }
 
         .link-active {
-            @apply border-l-4 border-primary;
+            @apply border-l-4 border-primaryDark;
+        }
+    }
+
+    @screen dark-mode {
+        .sidenavbar, .navbar {
+            @apply bg-gray-900;
+        }
+
+        .nav {
+            @apply text-gray-400;
+        }
+
+        .user-card {
+            @apply bg-gray-800 rounded-lg shadow-xl fixed px-4 py-6 mt-16 mr-6 top-0 right-0;
         }
     }
 </style>

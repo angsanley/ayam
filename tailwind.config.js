@@ -1,12 +1,21 @@
+const { colors } = require('tailwindcss/defaultTheme')
+
 module.exports = {
   purge: false,
   theme: {
     extend: {
       colors: {
         primary: '#30A8E6',
+        primaryDark: '#2395ce',
+        primaryDarker: '#1d8ec6',
         transparent: 'transparent',
         black: '#000',
         white: '#fff',
+        gray: {
+          ...colors.gray,
+          '950': '#0f131c',
+          '1000': '#0c0f16'
+        }
       },
       container: {
         padding: {
@@ -27,6 +36,9 @@ module.exports = {
       },
       boxShadow: {
         'primary': '0 10px 15px -3px rgba(48, 168, 230, .3)'
+      },
+      screens: {
+        'dark-mode': { raw: '(prefers-color-scheme: dark)' }
       }
     },
   },

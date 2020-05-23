@@ -2,7 +2,7 @@
     <div>
         <h3>Your Schedule</h3>
         <div class="mt-4">
-            <vc-calendar class="shadow-md border-none" is-expanded :attributes="calendarDates"/>
+            <vc-calendar class="shadow-md border-none" :is-dark="isDark" is-expanded :attributes="calendarDates"/>
         </div>
     </div>
 </template>
@@ -13,8 +13,20 @@
         props: ['calendarDates'],
         data() {
             return {
-
+                isDark: false,
             }
+        },
+        mounted() {
+            window.matchMedia('(prefers-color-scheme: dark)')
+                .addEventListener('change', event => {
+                    if (event.matches) {
+                        //dark mode
+                        this.isDark = true;
+                    } else {
+                        //light mode
+                        this.isDark = false;
+                    }
+                });
         }
     }
 </script>

@@ -7,14 +7,14 @@ body {
 }
 
 #app {
+    @apply text-gray-700;
     font-family: Inter, sans-serif;
-    color: theme('colors.gray.700');
     scroll-behavior: smooth;
 }
 
 h1, h2, h3, h4, h5, h6 {
+    @apply text-gray-800;
     font-family: Quicksand, sans-serif;
-    color: theme('colors.gray.800');
     font-weight: bold;
 }
 
@@ -136,4 +136,23 @@ a {
 .notification-box .notification-content {
     @apply text-sm;
 }
+
+@screen dark-mode {
+    body {
+        @apply bg-gray-950 text-gray-400;
+    }
+
+    #app {
+        @apply text-gray-400;
+    }
+
+    h1, h2, h3, h4, h5, h6 {
+        @apply text-gray-100;
+    }
+
+    .card {
+        @apply rounded-lg overflow-hidden shadow-md bg-gray-900;
+    }
+}
+
 /* purgecss end ignore */
