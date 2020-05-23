@@ -30,7 +30,8 @@ Vue.use(VueRouter)
     component: () => import('../views/Dashboard.vue'),
     children: [
       { path: '/', name: 'Dashboard', component: () => import('../views/Dashboard/Home.vue') },
-      { path: 'courses', name: 'Courses', component: () => import('../views/About.vue') },
+      { path: 'courses', name: 'Courses', component: () => import('../views/Dashboard/Courses.vue') },
+      { path: 'assignments', name: 'Assignments', component: () => import('../views/Dashboard/Assignments.vue') },
     ]
   }
 ]
