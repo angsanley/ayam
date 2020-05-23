@@ -2,28 +2,35 @@
     <div>
         <div class="sidenavbar">
 
+            <div class="h-16 mt-0 hidden lg:block p-4">
+                <img class="w-full h-full object-scale-down" src="../../assets/ayam_logo.svg" alt="logo"/>
+            </div>
+
             <ul class="nav list-none">
                 <li>
-                    <router-link to="/dashboard" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" exact-active-class="link-active">
+                    <router-link to="/dashboard" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 block mb-5" exact-active-class="link-active">
                         <i class="w-8 fas fa-home p-2"/>
                         <span class="mx-2 text-sm">Home</span>
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/dashboard/courses" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" active-class="link-active">
+                    <router-link to="/dashboard/academics" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 block mb-5" active-class="link-active">
                         <i class="w-8 fas fa-chalkboard-teacher p-2"/>
-                        <span class="mx-2 text-sm">Courses</span>
+                        <span class="mx-2 text-sm">Academics</span>
                     </router-link>
                 </li>
             </ul>
-
-            <div class="absolute bottom-0 pb-4">
-                asd
-            </div>
         </div>
 
         <div class="navbar" v-click-outside="closeUserCard">
-            <img class="logo" src="../../assets/ayam_logo.svg" alt="logo"/>
+
+<!--         search bar-->
+            <div class="relative text-gray-600 lg:ml-24">
+                <input type="search" name="search" placeholder="Search" class="bg-gray-300 h-10 px-5 pr-10 rounded-full text-sm focus:outline-none">
+                <button type="submit" class="absolute right-0 top-0 mt-2 mr-4">
+                    <i class="fas fa-search"></i>
+                </button>
+            </div>
 
             <a href="#" @click.prevent="toggleUserCard"><img class="account-pic h-10 w-10" :src="profilePicture" alt="profile picture"/></a>
             <transition name="fade">
@@ -112,7 +119,7 @@
     }
 
     .sidenavbar {
-        @apply relative py-1 px-6 text-gray-900 bg-white text-left float-none fixed bottom-0 z-40;
+        @apply relative px-6 text-gray-900 bg-white text-left float-none fixed bottom-0 z-40;
         width: 100vw;
         height: 4rem;
         box-shadow: 0 -10px 15px -3px rgba(0, 0, 0, 0.05), 0 -4px 6px -2px rgba(0, 0, 0, 0.025);
@@ -128,7 +135,7 @@
     }
 
     .link-active {
-        color: theme('colors.primary');
+        @apply text-primary;
     }
 
     .nav {
@@ -159,16 +166,10 @@
             @apply bg-gray-100 shadow-none;
         }
 
-        .logo {
-            @apply pl-24;
-        }
-
         .sidenavbar {
-            @apply py-8 px-4 float-left;
+            @apply px-0 float-left bg-gray-100 shadow-none text-gray-800;
             width: 6rem;
             min-height: 100vh;
-            color: white;
-            background: #1E87C9;
         }
 
         .nav {
@@ -180,7 +181,7 @@
         }
 
         .link-active {
-            @apply bg-white;
+            @apply border-l-4 border-primary;
         }
     }
 </style>
