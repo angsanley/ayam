@@ -118,7 +118,7 @@
             },
             insertDatesToCalendar() {
                 // input class schedules
-                this.classSchedules.forEach(e => {
+                if (this.classSchedules && this.classSchedules.length > 0) this.classSchedules.forEach(e => {
                     let dot = true;
                     if (e.N_DELIVERY_MODE === "GSLC") {
                         dot = "red";
@@ -144,7 +144,7 @@
                 });
 
                 // input assignment schedules
-                this.assignments.forEach(e => {
+                if (this.assignments && this.assignments.length > 0) this.assignments.forEach(e => {
                     const calendarObj = {
                         key: `${e.StudentAssignmentID}`,
                         dot: 'purple',
@@ -158,19 +158,21 @@
                 })
             },
             getNextClass() {
-                let nextClasses = this.classSchedules.filter(c => {
-                    return moment(c.END_DT.substring(0,10)).isAfter(moment())
-                })
+                if (this.classSchedules && this.classSchedules.length > 0) {
+                    let nextClasses = this.classSchedules.filter(c => {
+                        return moment(c.END_DT.substring(0,10)).isAfter(moment())
+                    })
 
-                let nextClass = nextClasses[0];
-                nextClass.startDate = moment(`${nextClass.START_DT.substring(0,10)} ${nextClass.MEETING_TIME_START}`, "YYYY-MM-DD HH:mm").toDate();
-                nextClass.endDate = moment(`${nextClass.END_DT.substring(0,10)} ${nextClass.MEETING_TIME_END}`, "YYYY-MM-DD HH:mm").toDate();
+                    let nextClass = nextClasses[0];
+                    nextClass.startDate = moment(`${nextClass.START_DT.substring(0,10)} ${nextClass.MEETING_TIME_START}`, "YYYY-MM-DD HH:mm").toDate();
+                    nextClass.endDate = moment(`${nextClass.END_DT.substring(0,10)} ${nextClass.MEETING_TIME_END}`, "YYYY-MM-DD HH:mm").toDate();
 
-                if (moment(nextClass.startDate).isSame(moment(), 'day')
-                    || moment(nextClass.startDate).isSame(moment().add(1,'days'), 'day')) {
-                    this.nextClass = nextClass;
-                } else {
-                    this.nextClass = -1;
+                    if (moment(nextClass.startDate).isSame(moment(), 'day')
+                        || moment(nextClass.startDate).isSame(moment().add(1,'days'), 'day')) {
+                        this.nextClass = nextClass;
+                    } else {
+                        this.nextClass = -1;
+                    }
                 }
             },
             async getRandomQuote() {

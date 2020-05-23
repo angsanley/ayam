@@ -30,9 +30,9 @@
                 <div class="user-card" v-if="showUserCard">
                     <div class="flex flex-col items-center">
                         <img class="account-pic h-24 w-24" :src="profilePicture" alt="profile picture"/>
-                        <div class="font-title font-bold text-lg mt-2 capitalize">{{dashboardData['Student']['Name'].toLowerCase()}}</div>
-                        <div class="text-sm mt-2">{{dashboardData['Student']['Email']}}</div>
-                        <div class="text-sm text-gray-600">{{dashboardData['Student']['Major']}}</div>
+                        <div class="font-title font-bold text-lg mt-2 capitalize">{{ studentProfile.name }}</div>
+                        <div class="text-sm mt-2">{{ studentProfile.email }}</div>
+                        <div class="text-sm text-gray-600">{{ studentProfile.major }}</div>
                         <a href="#" @click.prevent="logout" class="border-2 rounded-full w-full py-1 mt-4 text-center text-gray-700 no-underline hover:bg-gray-100 focus:outline-none">Logout</a>
                     </div>
                 </div>
@@ -59,7 +59,16 @@
         computed: {
             dashboardData() {
                 return this.$store.getters.getDashboardData;
-            }
+            },
+            studentProfile() {
+                let profile = { name: '', email: '', major: '' };
+                if (this.dashboardData) profile = {
+                    name: this.dashboardData['Student']['Name'].toLowerCase(),
+                    email: this.dashboardData['Student']['Email'],
+                    major: this.dashboardData['Student']['Major']
+                };
+                return profile;
+            },
         },
         methods: {
             toggleUserCard() {
