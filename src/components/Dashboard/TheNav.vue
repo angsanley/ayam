@@ -10,9 +10,9 @@
                     </router-link>
                 </li>
                 <li>
-                    <router-link to="/as" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" active-class="link-active">
-                        <i class="w-8 fas fa-home p-2"/>
-                        <span class="mx-2 text-sm">Page 2</span>
+                    <router-link to="/dashboard/courses" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 rounded block mb-5" active-class="link-active">
+                        <i class="w-8 fas fa-chalkboard-teacher p-2"/>
+                        <span class="mx-2 text-sm">Courses</span>
                     </router-link>
                 </li>
             </ul>
