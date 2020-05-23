@@ -26,25 +26,11 @@
                 </div>
 
                 <div class="mb-4">
-                    <video-conferences :video-conferences="videoConferences" :courses="courses" v-if="videoConferences.length > 0"/>
-
-                    <vue-content-loading v-else class="w-full" :height="60">
-                        <rect x="0" y="0" width="50" height="12" />
-                        <rect x="0" y="15" width="100" height="35" />
-                        <rect x="105" y="15" width="100" height="35" />
-                        <rect x="210" y="15" width="100" height="35" />
-                    </vue-content-loading>
+                    <video-conferences :video-conferences="filteredVideoSchedules" :courses="courses" v-if="courses.length > 0 && filteredVideoSchedules.length > 0"/>
                 </div>
 
                 <div class="mb-4">
-                    <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
-
-                    <vue-content-loading v-else  class="w-full" :height="60">
-                        <rect x="0" y="0" width="50" height="12" />
-                        <rect x="0" y="15" width="100" height="35" />
-                        <rect x="105" y="15" width="100" height="35" />
-                        <rect x="210" y="15" width="100" height="35" />
-                    </vue-content-loading>
+                    <assignments :assignments="filteredAssignments" :courses="courses" v-if="courses.length > 0 &&  filteredAssignments.length > 0"/>
                 </div>
             </perfect-scrollbar>
 
@@ -65,11 +51,10 @@
     import VideoConferences from "../../components/VideoConferences";
     import YourSchedule from "../../components/YourSchedule";
     import Repositories from "../../repositories/RepositoryFactory";
-    import { VueContentLoading } from 'vue-content-loading';
 
     export default {
         name: 'Home',
-        components: {YourSchedule, VideoConferences, Assignments, VueContentLoading},
+        components: {YourSchedule, VideoConferences, Assignments},
         data() {
             return {
                 isLoading: false,
@@ -215,7 +200,17 @@
                 return this.$store.getters.getClassSchedules;
             },
             userNameShort() {
-                return this.dashboardData ? this.dashboardData['Student']['Name'].split(' ')[0].toLowerCase() : '';
+                return this.dashboardData['Student'] ? this.dashboardData['Student']['Name'].split(' ')[0].toLowerCase() : '';
+            },
+            filteredAssignments() {
+                return this.assignments.filter((assignment) => {
+                    return moment(`${assignment['deadlineDuration']} ${assignment['deadlineTime']}`, "DD MMM YYYY HH:mm:ss").isAfter();
+                });
+            },
+            filteredVideoSchedules() {
+                return this.videoConferences.filter((schedule) => {
+                    return moment(schedule.startDate, "MMM DD, YYYY HH:mm:ss").isAfter(moment().add(30, 'minutes'));
+                });
             }
         },
         watch: {

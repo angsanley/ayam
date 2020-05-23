@@ -169,30 +169,32 @@ export default new Vuex.Store({
       const CourseFactory = Repositories.get("course");
 
       let assignments = [];
-      state.courses.forEach((course, courseIndex) => {
-        const courseId = course.COURSEID;
-        const crseId = course.CRSE_ID;
-        const strm = course.STRM;
-        const classNbr = course.CLASS_NBR;
-        const ssrComponent = course.SSR_COMPONENT;
+      if (state.courses && state.courses.length > 0) {
+        state.courses.forEach((course, courseIndex) => {
+          const courseId = course.COURSEID;
+          const crseId = course.CRSE_ID;
+          const strm = course.STRM;
+          const classNbr = course.CLASS_NBR;
+          const ssrComponent = course.SSR_COMPONENT;
 
-        CourseFactory.getIndividualAssignments(courseId, crseId, strm, ssrComponent, classNbr).then((response) => {
-          let data = response.data;
-          data.forEach((assignment, assignmentIndex) => {
-            assignment.classNbr = classNbr;
+          CourseFactory.getIndividualAssignments(courseId, crseId, strm, ssrComponent, classNbr).then((response) => {
+            let data = response.data;
+            data.forEach((assignment, assignmentIndex) => {
+              assignment.classNbr = classNbr;
 
-            assignments.push(assignment);
+              assignments.push(assignment);
 
-            const coursesDone = courseIndex >= state.courses.length-1;
-            const assignmentsDone = assignmentIndex >= data.length-1;
+              const coursesDone = courseIndex >= state.courses.length-1;
+              const assignmentsDone = assignmentIndex >= data.length-1;
 
-            if (coursesDone && assignmentsDone) {
-              setTimeout(() => commit('SET_ASSIGNMENTS', assignments), 500);
-            }
+              if (coursesDone && assignmentsDone) {
+                setTimeout(() => commit('SET_ASSIGNMENTS', assignments), 500);
+              }
+            });
           });
-        });
 
-      });
+        });
+      }
     },
   },
   modules: {
