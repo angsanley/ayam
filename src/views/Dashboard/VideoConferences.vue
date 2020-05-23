@@ -28,7 +28,7 @@
         },
         methods: {
             parseVideoSchedule(object) {
-                return moment(object.startDate, "MMM DD, YYYY HH:mm:ss");
+                return moment(object, "MMM DD, YYYY HH:mm:ss");
             }
         },
         computed: {
@@ -40,13 +40,13 @@
             },
             upcomingVideoConferences() {
                 return this.videoConferences.filter((videoSchedule) => {
-                    return this.parseVideoSchedule(videoSchedule).isAfter();
-                }).sort((a,b) => this.parseVideoSchedule(a) - this.parseVideoSchedule(b));
+                    return this.parseVideoSchedule(videoSchedule.endDate).isAfter();
+                }).sort((a,b) => this.parseVideoSchedule(a.endDate) - this.parseVideoSchedule(b.endDate));
             },
             pastVideoConferences() {
                 return this.videoConferences.filter((videoSchedule) => {
-                    return this.parseVideoSchedule(videoSchedule).isBefore();
-                }).sort((a,b) => this.parseVideoSchedule(b) - this.parseVideoSchedule(a));
+                    return this.parseVideoSchedule(videoSchedule.endDate).isBefore();
+                }).sort((a,b) => this.parseVideoSchedule(b.endDate) - this.parseVideoSchedule(a.endDate));
             }
         }
     }

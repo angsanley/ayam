@@ -9,10 +9,10 @@
 
                 <div class="flex flex-row items-center">
                     <div class="text-sm text-gray-600 text-right">
-                        <div>{{relativeTime(parseVideoSchedule(videoSchedule), 'Starts', 'Ended')}}</div>
-                        <div>{{parseVideoSchedule(videoSchedule).format("dddd, D MMM YYYY HH:mm")}}</div>
+                        <div>{{getVideoScheduleRelativeTime(videoSchedule)}}</div>
+                        <div>{{parseVideoSchedule(videoSchedule['startDate']).format("dddd, D MMM YYYY HH:mm")}}</div>
                     </div>
-                    <div class="ml-4" v-if="parseVideoSchedule(videoSchedule).isAfter()">
+                    <div class="ml-4" v-if="parseVideoSchedule(videoSchedule.endDate).isAfter()">
                         <a :href="videoSchedule['Link']" target="_blank" class="bg-primary hover:bg-blue-500 shadow-primary no-underline text-white font-bold rounded-lg md:rounded-full py-2 px-3 md:px-4 md:text-sm"><i class="fas fa-external-link-alt"/><span class="hidden md:inline"> Open in Zoom</span></a>
                     </div>
                 </div>
@@ -32,10 +32,19 @@
                 return this.courses.find(e => e['CLASS_NBR'] === classNbr);
             },
             parseVideoSchedule(object) {
-                return moment(object.startDate, "MMM DD, YYYY HH:mm:ss");
+                return moment(object, "MMM DD, YYYY HH:mm:ss");
             },
-            relativeTime(object, futureString, pastString) {
-                return `${moment().isAfter(object) ? pastString : futureString} ${object.fromNow()}`
+            relativeTime(startObject, endObject, futureString, pastString, endedString) {
+                if (moment().isAfter(endObject)) {
+                    return `${endedString} ${endObject.fromNow()}`;
+                } else if (moment().isAfter(startObject)) {
+                    return `${pastString} ${startObject.fromNow()}`;
+                } else {
+                    return `${futureString} ${startObject.fromNow()}`;
+                }
+            },
+            getVideoScheduleRelativeTime(object) {
+                return this.relativeTime(this.parseVideoSchedule(object.startDate), this.parseVideoSchedule(object.endDate), 'Starts', 'Started', 'Ended');
             }
         },
         mounted() {
