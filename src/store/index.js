@@ -18,7 +18,7 @@ const getDefaultState = () => {
     notifications: [],
 
     dashboardData: '',
-    courses: '',
+    courses: [],
     classSchedules: '',
     videoConferences: [],
     assignments: [],

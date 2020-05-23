@@ -26,25 +26,25 @@
                 </div>
 
                 <div class="mb-4">
-                    <vue-content-loading v-if="videoConferences.length <= 0"  class="w-full" :height="60">
+                    <video-conferences :video-conferences="videoConferences" :courses="courses" v-if="videoConferences.length > 0"/>
+
+                    <vue-content-loading v-else class="w-full" :height="60">
                         <rect x="0" y="0" width="50" height="12" />
                         <rect x="0" y="15" width="100" height="35" />
                         <rect x="105" y="15" width="100" height="35" />
                         <rect x="210" y="15" width="100" height="35" />
                     </vue-content-loading>
-
-                    <video-conferences :video-conferences="videoConferences" :courses="courses" v-if="videoConferences.length > 0"/>
                 </div>
 
                 <div class="mb-4">
-                    <vue-content-loading v-if="assignments.length <= 0"  class="w-full" :height="60">
+                    <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
+
+                    <vue-content-loading v-else  class="w-full" :height="60">
                         <rect x="0" y="0" width="50" height="12" />
                         <rect x="0" y="15" width="100" height="35" />
                         <rect x="105" y="15" width="100" height="35" />
                         <rect x="210" y="15" width="100" height="35" />
                     </vue-content-loading>
-
-                    <assignments :assignments="assignments" :courses="courses" v-if="assignments.length > 0"/>
                 </div>
             </perfect-scrollbar>
 
@@ -235,12 +235,12 @@
         },
         mounted() {
             this.checkSession();
+            this.getRandomQuote();
             this.$store.dispatch('fetchDashboardData');
             this.$store.dispatch('fetchCourses');
             this.$store.dispatch('fetchClassSchedules');
-            this.$store.dispatch('fetchVideoConferences');
             this.$store.dispatch('fetchAssignments');
-            this.getRandomQuote();
+            this.$store.dispatch('fetchVideoConferences');
         }
     }
 </script>
