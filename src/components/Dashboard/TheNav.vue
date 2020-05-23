@@ -19,6 +19,12 @@
                         <span class="mx-2 text-sm">Academics</span>
                     </router-link>
                 </li>
+                <li>
+                    <router-link to="/dashboard/financial" class="link cursor-pointer font-medium flex flex-col items-center justify-center py-1 block mb-5" active-class="link-active">
+                        <i class="w-8 fas fa-wallet p-2"/>
+                        <span class="mx-2 text-sm">Financial</span>
+                    </router-link>
+                </li>
             </ul>
         </div>
 
