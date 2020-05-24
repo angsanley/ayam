@@ -66,14 +66,16 @@
                     return el['Status'] === 'Paid';
                 });
 
-                const responseVa = await FinancialRepository.getVirtualAccount();
-                this.totalPaid = responseVa.data[0]['payment'];
-                this.totalCharge = responseVa.data[0]['charge'];
-
                 this.totalUnpaid = this.upcomingBills.reduce((acc, cur) => {
                     return { 'item_amt': parseInt(acc['item_amt']) + parseInt(cur['item_amt']) };
                 })['item_amt'];
-          },
+            },
+            async loadSummaryData() {
+                const FinancialRepository = RepositoryFactory.get('financial');
+                const responseVa = await FinancialRepository.getVirtualAccount();
+                this.totalPaid = responseVa.data[0]['payment'];
+                this.totalCharge = responseVa.data[0]['charge'];
+            },
             formatRupiah(number) {
                 return parseInt(number).toString().replace(/(\d)(?=(\d\d\d)+(?!\d))/g, "$1,");
             }
@@ -82,6 +84,7 @@
         },
         mounted() {
             this.loadFinancialData();
+            this.loadSummaryData();
         }
     }
 </script>
