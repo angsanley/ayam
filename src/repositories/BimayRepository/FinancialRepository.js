@@ -3,13 +3,13 @@ import Client from '../Clients/BimayAxiosClient';
 const resource = '/financial';
 
 export default {
-    getSummary() {
+    getVirtualAccount() {
         return Client().get(`${resource}/virtualaccount`);
     },
-    getSummaryAlt() {
+    getVirtualAccountAlt() {
         return Client().get(`${resource}/virtualaccount2`);
     },
-    getFinancialDetail() {
+    getFinancialSummary() {
         return Client().get(`${resource}/getFinancialSummary`);
     },
 };
