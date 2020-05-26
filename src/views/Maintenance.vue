@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen bg-white">
+    <div class="h-screen">
         <div class="navbar">
             <img class="logo" src="../assets/ayam_logo.svg" alt="logo"/>
         </div>
@@ -54,7 +54,7 @@
             let array = this.maintenanceTimes.filter(time => {
                 return moment(time.end).isAfter(moment());
             });
-            
+
             array.sort(function (a, b) {
                 if (moment(a.end).isBefore(moment(b.end))) {
                     return -1;

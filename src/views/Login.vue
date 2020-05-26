@@ -1,5 +1,5 @@
 <template>
-    <div class="h-screen bg-white">
+    <div class="h-screen">
         <div class="navbar">
             <img class="logo" src="../assets/ayam_logo.svg" alt="logo"/>
         </div>
