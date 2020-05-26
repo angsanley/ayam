@@ -2,7 +2,7 @@
     <div>
         <form class="pt-12" v-on:submit.prevent="submitForm">
             <div class="mb-4">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="username">
+                <label class="block text-sm font-bold mb-2" for="username">
                     Username
                 </label>
                 <div class="grid grid-cols-2 grid-flow-col gap-2 flex items-center">
@@ -11,7 +11,7 @@
                 </div>
             </div>
             <div class="mb-6">
-                <label class="block text-gray-700 text-sm font-bold mb-2" for="password">
+                <label class="block text-sm font-bold mb-2" for="password">
                     Password
                 </label>
                 <input class="default-input w-full" v-model="form.password" id="password" type="password" placeholder="Password" :disabled="(this.loading)">
@@ -30,7 +30,7 @@
 </template>
 
 <script>
-    import axios from 'axios';
+    import RepositoryFactory from "../repositories/RepositoryFactory";
 
     export default {
         name: "LoginForm",
@@ -52,10 +52,8 @@
                 this.$Progress.start();
                 this.error = "";
                 this.loading = true;
-                axios.post('https://s3k0gqdo19.execute-api.ap-southeast-1.amazonaws.com/prod/auth', {
-                    username: this.form.username,
-                    password: this.form.password
-                })
+                const CookieRepository = RepositoryFactory.get('cookie')
+                CookieRepository.auth(this.form.username, this.form.password)
                     .then((response) => {
                         // console.log(response.data);
                         this.cookies = response.data.cookies;

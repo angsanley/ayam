@@ -9,6 +9,7 @@ import NotificationRepository from "./BimayRepository/NotificationRepository";
 import SatPointsRepository from "./BimayRepository/SatPointsRepository";
 import StudentRepository from "./BimayRepository/StudentRepository";
 import VideoConferenceRepository from "./BimayRepository/VideoConferenceRepository";
+import CookieRepository from "./CookieRepository";
 
 const repositories = {
     'attendance': AttendanceRepository,
@@ -22,6 +23,7 @@ const repositories = {
     'session': SessionRepository,
     'student': StudentRepository,
     'videoConference': VideoConferenceRepository,
+    'cookie': CookieRepository,
 }
 export default {
     get: name => repositories[name]
