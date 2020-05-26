@@ -62,10 +62,6 @@ exports.handler = async (event) => {
         await browser.close();
         return {
             statusCode: 401,
-            headers: {
-                "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-                "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
-            },
             body: JSON.stringify({
                 message: error,
                 pageUrl
@@ -76,10 +72,6 @@ exports.handler = async (event) => {
         await browser.close();
         return {
             statusCode: 200,
-            headers: {
-                "Access-Control-Allow-Origin" : "*", // Required for CORS support to work
-                "Access-Control-Allow-Credentials" : true // Required for cookies, authorization headers with HTTPS
-            },
             body: JSON.stringify({
                 message: `Cookies acquired successfully :D`,
                 cookies: cookies,
