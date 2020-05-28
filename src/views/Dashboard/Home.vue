@@ -59,18 +59,21 @@
             return {
                 isLoading: false,
                 randomQuote: "",
-                calendarDates: [
-                    {
-                        key: 'today',
-                        highlight: true,
-                        dates: moment().toDate()
-                    }
-                ],
+                calendarDates: [],
                 nextClass: ""
             }
         },
         methods: {
             insertDatesToCalendar() {
+                // reset dates
+                this.calendarDates = [
+                    {
+                        key: 'today',
+                        highlight: true,
+                        dates: moment().toDate()
+                    }
+                ];
+
                 // input class schedules
                 if (this.classSchedules && this.classSchedules.length > 0) this.classSchedules.forEach(e => {
                     let dot = true;
@@ -86,11 +89,15 @@
                         key: `${e.CRSE_CODE}-${e.SessionIDNum}`,
                         dot,
                         dates: [
-                            { start: new moment(`${e.START_DT.substring(0,10)} ${e.MEETING_TIME_START}`, "YYYY-MM-DD HH:mm").toDate(),
-                                end: new moment(`${e.END_DT.substring(0,10)} ${e.MEETING_TIME_END}`, "YYYY-MM-DD HH:mm").toDate() }
+                            { start: new moment(`${e['START_DT'].substring(0,10)} ${e['MEETING_TIME_START']}`, "YYYY-MM-DD HH:mm").toDate(),
+                                end: new moment(`${e['END_DT'].substring(0,10)} ${e['MEETING_TIME_END']}`, "YYYY-MM-DD HH:mm").toDate() }
                         ],
+                        data: {
+                            title: `${e['N_DELIVERY_MODE']} - ${e['COURSE_TITLE_LONG']} (${e['SSR_COMPONENT']})`,
+                            date: `${e['MEETING_TIME_START']} - ${e['MEETING_TIME_END']}`
+                        },
                         popover: {
-                            label: `${e.MEETING_TIME_START} - ${e.N_DELIVERY_MODE} - ${e.COURSE_TITLE_LONG} (${e.SSR_COMPONENT})`,
+                            label: `${e['MEETING_TIME_START']} - ${e['N_DELIVERY_MODE']} - ${e['COURSE_TITLE_LONG']} (${e['SSR_COMPONENT']})`,
                         },
                     };
 
@@ -100,11 +107,15 @@
                 // input assignment schedules
                 if (this.assignments && this.assignments.length > 0) this.assignments.forEach(e => {
                     const calendarObj = {
-                        key: `${e.StudentAssignmentID}`,
+                        key: `${e['StudentAssignmentID']}`,
                         dot: 'purple',
                         dates: new moment(`${e.deadlineDuration} ${e.deadlineTime}`, "DD MMM YYYY HH:mm:ss").toDate(),
+                        data: {
+                            title: `Asg. Deadline - ${this.courses.find(el => el['CLASS_NBR'] === e.classNbr)['COURSENAME']}`,
+                            date: `${e['deadlineTime'].substring(0,5)}`
+                        },
                         popover: {
-                            label: `${e.deadlineTime.substring(0,5)} - Asg. Deadline - ${this.courses.find(el => el.CLASS_NBR === e.classNbr).COURSENAME}`,
+                            label: `${e['deadlineTime'].substring(0,5)} - Asg. Deadline - ${this.courses.find(el => el['CLASS_NBR'] === e.classNbr)['COURSENAME']}`,
                         },
                     };
 
