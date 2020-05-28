@@ -8,12 +8,12 @@
     export default {
         name: "Home",
         computed: {
-            isAuthenticated() {
-                return this.$store.getters.isAuthenticated;
+            currentSession() {
+                return this.$store.getters.getCurrentSession;
             }
         },
         mounted() {
-            if (this.$store.getters.isAuthenticated) {
+            if (this.currentSession.isAuthenticated) {
                 this.$router.push('/dashboard');
             } else {
                 this.$router.push('/login');

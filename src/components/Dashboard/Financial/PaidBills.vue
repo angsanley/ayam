@@ -8,7 +8,7 @@
                     </div>
                     <div class="flex flex-col items-end text-right">
                         <div class="text-sm text-gray-600">{{billing['item_term']}}</div>
-                        <div class="text-sm text-green-700 font-bold">Paid {{formatTime(billing['due_dt'])}} ({{getRelativeTime(billing['due_dt'])}})</div>
+                        <div class="text-sm text-green-700 font-bold">Paid {{formatTime(billing['due_dt'])}}</div>
                     </div>
                 </div>
             </div>

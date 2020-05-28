@@ -209,6 +209,9 @@
             },
         },
         mounted() {
+            // check session
+            this.$parent.checkSession();
+
             this.getRandomQuote();
             this.$store.dispatch('fetchDashboardData');
             this.$store.dispatch('fetchCourses');

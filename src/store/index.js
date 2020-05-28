@@ -3,6 +3,7 @@ import Vuex from 'vuex'
 import VuexPersist from 'vuex-persist'
 
 import Repositories from "../repositories/RepositoryFactory";
+import moment from "moment-timezone";
 
 Vue.use(Vuex)
 
@@ -13,10 +14,19 @@ const vuexPersist = new VuexPersist({
 
 const getDefaultState = () => {
   return {
-    phpsessid: '',
-    isAuthenticated: false,
+    session: {
+      isAuthenticated: false,
+      username: '',
+      password: '',
+      phpsessid: '',
+      lastLogin: ''
+    },
+    financialData: {
+      financialSummary: '',
+      totalPaid: 0,
+      totalCharge: 0
+    },
     notifications: [],
-
     dashboardData: '',
     courses: [],
     classSchedules: '',
@@ -28,11 +38,8 @@ const getDefaultState = () => {
 export default new Vuex.Store({
   state: getDefaultState(),
   getters: {
-    phpsessid: (state) => {
-      return state.phpsessid
-    },
-    isAuthenticated: (state) => {
-      return state.isAuthenticated
+    getCurrentSession: (state) => {
+      return state.session
     },
     getNotifications: (state) => {
       return state.notifications
@@ -53,16 +60,16 @@ export default new Vuex.Store({
     getAssignments: (state) => {
       return state.assignments
     },
+    getFinancialData: (state) => {
+      return state.financialData
+    },
   },
   mutations: {
     RESET_STATE (state) {
       Object.assign(state, getDefaultState())
     },
-    SET_PHPSESSID: (state, newValue) => {
-      state.phpsessid = newValue
-    },
-    SET_ISAUTHENTICATED: (state, newValue) => {
-      state.isAuthenticated = newValue
+    SET_SESSION: (state, newValue) => {
+      state.session = newValue
     },
     PUSH_NOTIFICATIONS: (state, newValue) => {
       state.notifications.push(newValue)
@@ -89,21 +96,21 @@ export default new Vuex.Store({
     PUSH_ASSIGNMENTS: (state, newValue) => {
       state.assignments.push(newValue)
     },
+    SET_FINANCIAL: (state, newValue) => {
+      state.financialData = newValue
+    },
   },
   actions: {
     clearAll({ commit }){
       commit("RESET_STATE")
     },
-    setPhpsessid: ({commit, state}, newValue) => {
-      commit('SET_PHPSESSID', newValue)
-      return state.phpsessid
-    },
-    isAuthenticated: ({commit, state}, newValue) => {
-      commit('SET_ISAUTHENTICATED', newValue)
-      return state.isAuthenticated
+    setCurrentSession: ({commit, state}, newValue) => {
+      newValue.lastLogin = moment()
+      commit('SET_SESSION', newValue)
+      return state.session
     },
     addNotifications: ({commit, state}, newValue) => {
-      commit('PUSH_NOTIFICATIONS', newValue)
+      commit('PUSH_NOTIFICATIONS', {}) // TODO: Temporary fix because notifications never cleared. This is a hack, should not be done like this.
 
       // show notification
       Vue.notify({
@@ -117,20 +124,25 @@ export default new Vuex.Store({
       return state.notifications
     },
 
-    fetchDashboardData: async ({commit}) => {
+    fetchDashboardData: ({commit}) => {
       const StudentRepository = Repositories.get("student");
-      const response = await StudentRepository.getProfile();
-      commit('SET_DASHBOARD_DATA', response.data);
+      StudentRepository.getProfile().then(response => {
+        commit('SET_DASHBOARD_DATA', response.data);
+      });
+
     },
-    fetchCourses: async ({commit}) => {
+    fetchCourses: ({commit}) => {
       const StudentRepository = Repositories.get("student");
-      const response = await StudentRepository.getCourses();
-      commit('SET_COURSES', response.data['Courses']);
+      StudentRepository.getCourses().then(response => {
+        commit('SET_COURSES', response.data['Courses']);
+      });
     },
-    fetchClassSchedules: async ({commit}) => {
+    fetchClassSchedules: ({commit}) => {
       const StudentRepository = Repositories.get("student");
-      const response = await StudentRepository.getClassSchedules();
-      commit('SET_CLASS_SCHEDULES', response.data);
+      StudentRepository.getClassSchedules().then(response => {
+        commit('SET_CLASS_SCHEDULES', response.data);
+      });
+
     },
     fetchVideoConferences: ({commit, state}) => {
       const VideoConferenceRepository = Repositories.get("videoConference");
@@ -195,6 +207,11 @@ export default new Vuex.Store({
 
         });
       }
+    },
+
+    setFinancialData: ({commit, state}, newValue) => {
+      commit('SET_FINANCIAL', newValue)
+      return state.financialData
     },
   },
   modules: {

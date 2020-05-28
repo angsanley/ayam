@@ -47,6 +47,11 @@
                 loadingButtonText: "Signing in...",
             }
         },
+        computed: {
+          currentSession() {
+              return this.$store.getters.getCurrentSession
+          }
+        },
         methods: {
             submitForm() {
                 this.$Progress.start();
@@ -58,10 +63,16 @@
                         // console.log(response.data);
                         this.cookies = response.data.cookies;
 
-                        // save phpsessid
+                        // save user credentials
                         const phpsessid = this.cookies.find(el => el.name === "PHPSESSID").value;
-                        this.$store.dispatch('setPhpsessid', phpsessid);
-                        this.$store.dispatch('isAuthenticated', true);
+
+                        let newSession = this.currentSession;
+                        newSession.isAuthenticated = true;
+                        newSession.phpsessid = phpsessid;
+                        newSession.username = this.form.username;
+                        newSession.password = this.form.password;
+
+                        this.$store.dispatch('setCurrentSession', newSession);
 
                         this.$Progress.finish();
                         this.loading = false;

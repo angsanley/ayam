@@ -8,7 +8,11 @@
 
 <script>
     export default {
-        name: "Academics"
+        name: "Academics",
+        mounted() {
+            // check session
+            this.$parent.checkSession();
+        }
     }
 </script>
 
