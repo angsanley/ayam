@@ -11,7 +11,7 @@
                             <div class="py-2">
                                 <div class="flex flex-col">
                                     <div class="flex items-center">
-                                        <div :class="`bg-${event.dot}-500 w-2 h-2 inline-block mr-4 rounded-full`"></div>
+                                        <div :class="`vc-bg-${event.dot}-500 w-2 h-2 inline-block mr-4 rounded-full`"></div>
                                         <div>{{ event.data.title }}</div>
                                     </div>
                                     <div class="ml-6">{{ event.data.date }}</div>
