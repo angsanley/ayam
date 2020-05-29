@@ -17,6 +17,7 @@
             async checkSession() {
                 const SessionFactory = Repositories.get("session");
                 const CookieFactory = Repositories.get("cookie");
+                const LoginRepository = Repositories.get("login");
 
                 this.$Progress.start();
 
@@ -57,6 +58,9 @@
                                 text: 'We\'ve successfully updated your data. Enjoy!',
                                 type: 'success'
                             })
+
+                            // TODO: temporarily change role to S1 Regular
+                            await LoginRepository.switchRole(2, 104);
 
                             // refresh
                             await this.$router.push('/');

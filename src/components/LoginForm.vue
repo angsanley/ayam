@@ -58,6 +58,7 @@
                 this.error = "";
                 this.loading = true;
                 const CookieRepository = RepositoryFactory.get('cookie')
+                const LoginRepository = RepositoryFactory.get('login')
                 CookieRepository.auth(this.form.username, this.form.password)
                     .then((response) => {
                         // console.log(response.data);
@@ -73,6 +74,9 @@
                         newSession.password = this.form.password;
 
                         this.$store.dispatch('setCurrentSession', newSession);
+
+                        // TODO: temporarily change role to S1 Regular
+                        LoginRepository.switchRole(2, 104);
 
                         this.$Progress.finish();
                         this.loading = false;
