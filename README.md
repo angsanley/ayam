@@ -13,5 +13,8 @@ Ayam does **NOT** collect or store any of your BINUSMaya data in our database. I
 ## Contributing
 Any contributions are open, feel free to open PR if you want to contribute. 😁
 
+## Donation
+Ayam site (https://bimay.binusian.id) is hosted in the cloud and it needs money to operate. If you found Ayam helpful for you and wanna help me pay for the cloud expenses, I will appreciate it! 🙏  You can [Donate using GoPay](https://imgur.com/a/QGHnj2L).
+
 ### License
 [Apache License 2.0](https://www.apache.org/licenses/LICENSE-2.0)
