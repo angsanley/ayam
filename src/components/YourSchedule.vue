@@ -34,7 +34,7 @@
         data() {
             return {
                 isDark: false,
-                date: moment(),
+                date: '',
                 eventsOnDate: ''
             }
         },
@@ -60,6 +60,9 @@
             }
         },
         mounted() {
+            // set current date
+            this.date = moment();
+
             if (window.matchMedia &&
                 window.matchMedia('(prefers-color-scheme: dark)').matches) {
                 this.isDark = true;
