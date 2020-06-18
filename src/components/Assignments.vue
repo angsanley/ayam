@@ -7,7 +7,7 @@
         <horizontal-scrolling-container>
 
             <router-link class="no-underline" to="/dashboard/assignments" v-for="assignment in this.assignments" :key="assignment['Title']">
-                <div class="card assignment-card flex flex-shrink-0">
+                <div class="card assignment-card flex flex-shrink-0 h-full">
                     <div class="flex flex-col h-full justify-between">
                         <h5>{{courses.find(e => e['CLASS_NBR'] === assignment.classNbr)['COURSENAME']}}</h5>
                         <div class="text-sm text-gray-500">{{assignment['Title']}}</div>
