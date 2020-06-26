@@ -18,7 +18,7 @@
     "core-js": "^3.6.4",
     "countdown-vue": "^1.1.5",
     "html-table-to-json": "^1.0.0",
-    "moment": "^2.25.3",
+    "moment": "^2.26.0",
     "moment-timezone": "^0.5.31",
     "table-to-json": "^1.0.0",
     "tailwindcss": "^1.4.6",
