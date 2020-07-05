@@ -11,7 +11,7 @@
     "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
-    "@fullhuman/postcss-purgecss": "^2.2.0",
+    "@fullhuman/postcss-purgecss": "^2.3.0",
     "autoprefixer": "^9.8.0",
     "axios": "^0.19.2",
     "axios-retry": "^3.1.8",
