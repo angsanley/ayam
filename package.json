@@ -34,7 +34,7 @@
     "vuex": "^3.5.1",
     "vuex-persist": "^2.2.0",
     "webpack-gtag-plugin": "^1.0.1",
-    "snyk": "^1.364.0"
+    "snyk": "^1.373.1"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
