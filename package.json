@@ -21,7 +21,7 @@
     "moment": "^2.26.0",
     "moment-timezone": "^0.5.31",
     "table-to-json": "^1.0.0",
-    "tailwindcss": "^1.5.1",
+    "tailwindcss": "^1.7.1",
     "v-calendar": "^1.0.8",
     "vue": "^2.6.11",
     "vue-content-loading": "^1.6.0",
