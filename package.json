@@ -11,17 +11,17 @@
     "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
-    "@fullhuman/postcss-purgecss": "^2.3.0",
+    "@fullhuman/postcss-purgecss": "^3.1.0",
     "autoprefixer": "^9.8.6",
-    "axios": "^0.19.2",
+    "axios": "^0.21.3",
     "axios-retry": "^3.1.8",
     "core-js": "^3.6.4",
     "countdown-vue": "^1.1.5",
     "html-table-to-json": "^1.0.0",
-    "moment": "^2.26.0",
+    "moment": "^2.29.4",
     "moment-timezone": "^0.5.31",
     "table-to-json": "^1.0.0",
-    "tailwindcss": "^1.5.1",
+    "tailwindcss": "^2.2.0",
     "v-calendar": "^1.0.8",
     "vue": "^2.6.11",
     "vue-content-loading": "^1.6.0",
@@ -34,7 +34,7 @@
     "vuex": "^3.5.1",
     "vuex-persist": "^2.2.0",
     "webpack-gtag-plugin": "^1.0.1",
-    "snyk": "^1.364.0"
+    "snyk": "^1.996.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
