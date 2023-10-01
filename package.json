@@ -11,8 +11,8 @@
     "prepare": "yarn run snyk-protect"
   },
   "dependencies": {
-    "@fullhuman/postcss-purgecss": "^2.3.0",
-    "autoprefixer": "^9.8.6",
+    "@fullhuman/postcss-purgecss": "^3.1.0",
+    "autoprefixer": "^10.0.0",
     "axios": "^0.19.2",
     "axios-retry": "^3.1.8",
     "core-js": "^3.6.4",
@@ -21,7 +21,7 @@
     "moment": "^2.26.0",
     "moment-timezone": "^0.5.31",
     "table-to-json": "^1.0.0",
-    "tailwindcss": "^1.5.1",
+    "tailwindcss": "^2.2.0",
     "v-calendar": "^1.0.8",
     "vue": "^2.6.11",
     "vue-content-loading": "^1.6.0",
