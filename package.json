@@ -21,7 +21,7 @@
     "moment": "^2.26.0",
     "moment-timezone": "^0.5.31",
     "table-to-json": "^1.0.0",
-    "tailwindcss": "^1.5.1",
+    "tailwindcss": "^2.2.5",
     "v-calendar": "^1.0.8",
     "vue": "^2.6.11",
     "vue-content-loading": "^1.6.0",
@@ -34,7 +34,7 @@
     "vuex": "^3.5.1",
     "vuex-persist": "^2.2.0",
     "webpack-gtag-plugin": "^1.0.1",
-    "snyk": "^1.364.0"
+    "snyk": "^1.429.0"
   },
   "devDependencies": {
     "@vue/cli-plugin-babel": "~4.3.0",
